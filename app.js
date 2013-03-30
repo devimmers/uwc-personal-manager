@@ -32,6 +32,7 @@ app.configure(function () {
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(passport.initialize());
     app.use(passport.session());
+
     app.use(app.router);
     app.use(express.static(path.join(__dirname, 'public')));
 });
@@ -52,13 +53,13 @@ app.get('/notes', ensureAuthenticated, notes.findUserNotes);
 // Find note by id
 app.get('/notes/:id', ensureAuthenticated, notes.findById);
 //Add new note
-app.post('/addNote', ensureAuthenticated, notes.addNote);
+app.post('/notes/addNote', ensureAuthenticated, notes.addNote);
 // Update note
 app.put('/notes/:id', ensureAuthenticated, notes.updateNote);
 //Delete note
 app.delete('/notes/:id', ensureAuthenticated, notes.deleteNote);
 //Notes count
-app.get('/notesCount', ensureAuthenticated, notes.notesCount);
+app.get('/notes/notesCount', ensureAuthenticated, notes.notesCount);
 
 //Task area
 //Get list all user tasks
@@ -66,13 +67,13 @@ app.get('/tasks', ensureAuthenticated, tasks.findUserTasks);
 // Find task by id
 app.get('/tasks/:id', ensureAuthenticated, tasks.findById);
 //Add new task
-app.post('/addTask', ensureAuthenticated, tasks.addTask);
+app.post('/tasks/addTask', ensureAuthenticated, tasks.addTask);
 // Update task
 app.put('/tasks/:id', ensureAuthenticated, tasks.updateTask);
 //Delete task
 app.delete('/tasks/:id', ensureAuthenticated, tasks.deleteTask);
 //Tasks count
-app.get('/tasksCount', ensureAuthenticated, tasks.tasksCount);
+app.get('/tasks/tasksCount', ensureAuthenticated, tasks.tasksCount);
 
 //Event area
 //Get list all user event
@@ -80,16 +81,16 @@ app.get('/events', ensureAuthenticated, events.findUserEvents);
 // Find event by id
 app.get('/events/:id', ensureAuthenticated, events.findById);
 //Add new event
-app.post('/addTask', ensureAuthenticated, events.addEvent);
+app.post('/events/addTask', ensureAuthenticated, events.addEvent);
 // Update event
 app.put('/events/:id', ensureAuthenticated, events.updateEvent);
 //Delete event
 app.delete('/events/:id', ensureAuthenticated, events.deleteEvent);
 //Tasks count
-app.get('/eventsCount', ensureAuthenticated, events.eventsCount);
+app.get('/events/eventsCount', ensureAuthenticated, events.eventsCount);
 
 app.get('/*',function(req,res) {
-    res.render('index.html')
+    res.sendfile(__dirname + '/public/index.html');
 });
 
 //Start app
