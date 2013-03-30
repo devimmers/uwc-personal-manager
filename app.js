@@ -9,7 +9,6 @@ var config = require('./config').config,
     events = require('./routes/events'),
     passportConfig = require("./passport-config"),
     passport = require('passport'),
-    cons = require('consolidate'),
     mongoose = require('mongoose');
 
 mongoose.connect(config.mongo.adress);
@@ -33,8 +32,8 @@ app.configure(function () {
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(passport.initialize());
     app.use(passport.session());
-    app.set('views', __dirname + '/views');
-    app.engine('html', require('ejs').renderFile);
+    app.engine('html', require('ejs').__express);
+    app.set('views', __dirname + '/public');
     app.use(app.router);
     app.use(express.static(path.join(__dirname, 'public')));
 });
