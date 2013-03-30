@@ -1,6 +1,6 @@
-var User = require('../models/user.js').model;
+var User = require('../models/models.js').userModel;
 
-    exports.logout = function(req, res) {
+exports.logout = function(req, res) {
     req.logOut();
     res.redirect('/');
 };

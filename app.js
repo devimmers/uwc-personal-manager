@@ -4,9 +4,17 @@ var express = require('express'),
 
 var config = require('./config').config,
     users = require('./routes/users'),
+    notes = require('./routes/notes'),
     passportConfig = require("./passport-config"),
     passport = require('passport'),
     mongoose = require('mongoose');
+
+mongoose.connect(config.mongo.adress);
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback() {
+    console.log('Connected to DB');
+});
 
 var app = express();
 
@@ -42,13 +50,24 @@ app.configure(function () {
 passportConfig();
 
 // POST /login
-app.post('/login',
-    passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login' })
-);
+app.post('/login', passport.authenticate('local', { successRedirect: '/notes', failureRedirect: '/login' }));
 //Get logout action
 app.get('/logout', users.logout);
 //Get register action
 app.post('/register', users.register);
+
+//Note area
+//Get list all user notes
+app.get('/notes', ensureAuthenticated, notes.findUserNotes);
+// Find note by id
+app.get('/notes/:id', ensureAuthenticated, notes.findById);
+//Add new note
+app.post('/addNote', ensureAuthenticated, notes.addNote);
+// Update note
+app.put('/notes/:id', ensureAuthenticated, notes.updateNote);
+//Delete item
+app.delete('/notes/:id', ensureAuthenticated, notes.deleteNote);
+
 
 //Start app
 app.listen(app.get('port'), function() {
