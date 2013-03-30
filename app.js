@@ -9,6 +9,7 @@ var config = require('./config').config,
     events = require('./routes/events'),
     passportConfig = require("./passport-config"),
     passport = require('passport'),
+    cons = require('consolidate'),
     mongoose = require('mongoose');
 
 mongoose.connect(config.mongo.adress);
@@ -32,7 +33,8 @@ app.configure(function () {
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(passport.initialize());
     app.use(passport.session());
-
+    app.set('views', __dirname + '/views');
+    app.engine('html', require('ejs').renderFile);
     app.use(app.router);
     app.use(express.static(path.join(__dirname, 'public')));
 });
@@ -90,7 +92,7 @@ app.delete('/events/:id', ensureAuthenticated, events.deleteEvent);
 app.get('/events/eventsCount', ensureAuthenticated, events.eventsCount);
 
 app.get('/*',function(req,res) {
-    res.sendfile(__dirname + '/public/index.html');
+    res.render('index.html');
 });
 
 //Start app
