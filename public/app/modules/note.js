@@ -12,13 +12,30 @@ function(app) {
 
   // Default Model.
   Note.Model = Backbone.Model.extend({
-  
+    idAtrribute: "_id",
+    defaults:{
+      title: "",//String,
+      description: ""//String,
+    },
+    initialize: function() {
+      if (this.isNew())
+        this.save()
+    },
+    url: "/notes"
   });
 
   // Default Collection.
   Note.Collection = Backbone.Collection.extend({
     model: Note.Model,
-    url: "/notes"
+    url: "/notes",
+
+    parse: function(resp) {
+      _(resp).map( function( value, key, resp ) {
+        value.id = value._id;
+        return value;
+      });
+      return resp;
+    }
   });
 
   // Default View.
@@ -26,8 +43,21 @@ function(app) {
     template: "note/layout",
     tagName: "ul",
 
+    events: {
+      "click #send-note": "addNote"
+    },
+
     initialize: function() {
       this.listenTo(this.collection, "add reset", this.render);
+    },
+
+    addNote: function(e) {
+      e.preventDefault();
+
+      this.collection.add({
+        "title": this.$el.find("[name='title']").val(),
+        "description": this.$el.find("[name='description']").val()
+      });
     },
 
     beforeRender: function() {
@@ -45,10 +75,6 @@ function(app) {
 
     serialize: function() {
       return this.model.toJSON();
-    },
-
-    afterRender: function() {
-      app.log(this.model.toJSON());
     }
   });
 
