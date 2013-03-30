@@ -32,7 +32,6 @@ app.configure(function () {
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(passport.initialize());
     app.use(passport.session());
-
     app.use(app.router);
     app.use(express.static(path.join(__dirname, 'public')));
 });
@@ -89,10 +88,9 @@ app.delete('/events/:id', ensureAuthenticated, events.deleteEvent);
 //Tasks count
 app.get('/eventsCount', ensureAuthenticated, events.eventsCount);
 
-app.get(/^\/app(\/\w+)*$/, function(req, res) {
-    // Render the app...
+app.get('/*',function(req,res) {
+    res.render('index.html')
 });
-
 
 //Start app
 app.listen(app.get('port'), function() {
