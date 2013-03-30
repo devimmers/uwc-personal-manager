@@ -13,12 +13,35 @@ function(app) {
   // Default Model.
   User.Model = Backbone.Model.extend({
     defaults:{
-      username: "", //String,
+      // username: "", //String,
+      email: "", //String
       password: "", //String,
-      email: "" //String
+      state: ""
     },
-    url: "register",
-    urlRoot: "/"
+    // url: "login",
+    // urlRoot: "/",
+    initialize:  function() {
+      this.on("change", this.log);
+    },
+
+    log: function() {
+      app.log(this.toJSON());
+    },
+
+    login: function() {
+      var user = this;
+      $.ajax({
+        url: '/login',
+        type: 'POST',
+        data: user.toJSON(),
+        success: function(data, textStatus, xhr) {
+          user.set("state", "logined");
+        },
+        error: function(xhr, textStatus, errorThrown) {
+          app.log(xhr);
+        }
+      });
+    }
   });
 
   // // Default Collection.
@@ -42,7 +65,14 @@ function(app) {
 
     login: function(e) {
       e.preventDefault();
-      app.log(this.$el.serialize());
+      this.model.set({
+        "email": this.$el.find("[name='email']").val(),
+        "password": this.$el.find("[name='password']").val(),
+      });
+      // this.model.save({success: function(resp) {
+      //   app.log(resp);
+      // }});
+      this.model.login();
     }
 
   });
