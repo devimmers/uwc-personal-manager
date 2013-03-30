@@ -5,7 +5,7 @@ exports.config = {
         version: '1'
     },
     mongo: {
-        adress: "mongodb://localhost/itemsdb"
-       // adress: "mongodb://lab01:projectlab01@web306.webfaction.com:30718/itemsdb"
+        adress: "mongodb://localhost/taskManager"
+       // adress: "mongodb://lab01:projectlab01@web306.webfaction.com:30718/taskManager"
     }
 }

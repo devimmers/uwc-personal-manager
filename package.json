@@ -1,6 +1,6 @@
 {
-    "name": "Items",
-    "description": "Item test app",
+    "name": "Uwc-Organizer",
+    "description": "Organizer application for uwc-4, done by devimmers",
     "version": "0.0.1",
     "private": true,
     "dependencies": {
