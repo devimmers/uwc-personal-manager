@@ -42,7 +42,20 @@ app.configure(function () {
 passportConfig();
 
 // POST /login
-app.post('/login', passport.authenticate('local', { successRedirect: '/notes'}));
+app.post('/login', function(req, res, next) {
+    passport.authenticate('local', function(err, user, info) {
+        if (err) { return next(err) }
+        if (!user) {
+            req.session.messages =  [info.message];
+            return res.send(req.session.messages);
+        }
+        req.logIn(user, function(err) {
+            if (err) { return next(err); }
+            return res.send(user.get('accessToken'));
+        });
+    })(req, res, next);
+});
+
 //Get logout action
 app.get('/logout', users.logout);
 //Get register action
