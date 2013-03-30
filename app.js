@@ -92,7 +92,7 @@ app.get('/events', ensureAuthenticated, events.findUserEvents);
 // Find event by id
 app.get('/events/:id', ensureAuthenticated, events.findById);
 //Add new event
-app.post('/addTask', ensureAuthenticated, events.addEvent);
+app.post('/addEvent', ensureAuthenticated, events.addEvent);
 // Update event
 app.put('/events/:id', ensureAuthenticated, events.updateEvent);
 //Delete event
