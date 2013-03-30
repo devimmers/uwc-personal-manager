@@ -56,6 +56,8 @@ app.post('/login', function(req, res, next) {
     })(req, res, next);
 });
 
+//Get user token
+app.get('/login', users.getToken);
 //Get logout action
 app.get('/logout', users.logout);
 //Get register action

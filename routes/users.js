@@ -1,8 +1,17 @@
 var User = require('../models/models.js').model;
 
+//Logout action
 exports.logout = function(req, res) {
     req.logOut();
     res.redirect('/');
+};
+
+//Return user token
+exports.getToken = function(req, res) {
+    if(req.user) {
+        var token = req.user.accessToken;
+    }
+    res.send({token:token});
 };
 
 // Add new user
