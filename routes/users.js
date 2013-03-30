@@ -12,11 +12,11 @@ exports.register = function(req, res) {
     console.log('Add user: ' + JSON.stringify(newUser));
     newUser.save(function(err){
         if (err) {
-            console.log("Error saved");
+            console.log("Error by save user");
             res.send("Fail");
             throw err;
         }
-        console.log("Saved");
+        console.log("User was saved");
         res.send("Succesed");
         res.redirect('/login');
     });

@@ -1,12 +1,11 @@
-var Note = require('../models/models.js').noteModel,
-    config = require('../config.js').config;
+var Note = require('../models/models.js').noteModel;
 
 //Find all user notes
 exports.findUserNotes = function(req, res) {
     console.log('Find all user notes');
     Note.find({_user:req.user._id}, function(error, data){
         if (error) {
-            console.log("Error");
+            console.log("Error by finding notes");
         }
         res.send(data);
     });
@@ -20,11 +19,11 @@ exports.addNote = function(req, res) {
     console.log('Add note: ' + JSON.stringify(note));
     save_note.save(function(err){
         if (err) {
-            console.log("Eroro saved");
+            console.log("Error by saving note");
             res.send("Fail");
             throw err;
         }
-        console.log("Saved");
+        console.log("Note was saved");
         res.send("Succesed");
     });
 };
@@ -32,10 +31,10 @@ exports.addNote = function(req, res) {
 //Find note by id
 exports.findById = function(req, res) {
     var id = req.params.id;
-    console.log('Find by id: ' + id);
+    console.log('Find note by id: ' + id);
     Note.find({_id:id}, function(error, data){
         if(error) {
-            console.log("Error finding by id :" + id);
+            console.log("Error finding note by id :" + id);
         }
         res.send(data);
     });
@@ -48,7 +47,7 @@ exports.updateNote = function(req, res) {
     console.log('Update note: ' + JSON.stringify(note));
     Note.update({_id:id}, note, {safe:true}, function(error, result) {
         if (error) {
-            console.log("Error update");
+            console.log("Error update note");
         }
         res.send(result);
     });
@@ -60,9 +59,9 @@ exports.deleteNote = function(req, res) {
     console.log('Delete note by id: ' + id);
     Note.remove({_id:id}, function(error) {
         if (error) {
-            res.send("Fail delete");
+            res.send("Fail delete note");
         }
-        console.log("Deleted");
+        console.log("Note was deleted");
         res.send("Succesed");
     });
 };
