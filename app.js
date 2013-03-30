@@ -69,7 +69,7 @@ app.get('/notes', ensureAuthenticated, notes.findUserNotes);
 // Find note by id
 app.get('/notes/:id', ensureAuthenticated, notes.findById);
 //Add new note
-app.post('/notes/addNote', ensureAuthenticated, notes.addNote);
+app.post('/notes', ensureAuthenticated, notes.addNote);
 // Update note
 app.put('/notes/:id', ensureAuthenticated, notes.updateNote);
 //Delete note
@@ -83,7 +83,7 @@ app.get('/tasks', ensureAuthenticated, tasks.findUserTasks);
 // Find task by id
 app.get('/tasks/:id', ensureAuthenticated, tasks.findById);
 //Add new task
-app.post('/tasks/addTask', ensureAuthenticated, tasks.addTask);
+app.post('/tasks', ensureAuthenticated, tasks.addTask);
 // Update task
 app.put('/tasks/:id', ensureAuthenticated, tasks.updateTask);
 //Delete task
@@ -97,7 +97,7 @@ app.get('/events', ensureAuthenticated, events.findUserEvents);
 // Find event by id
 app.get('/events/:id', ensureAuthenticated, events.findById);
 //Add new event
-app.post('/events/addTask', ensureAuthenticated, events.addEvent);
+app.post('/events', ensureAuthenticated, events.addEvent);
 // Update event
 app.put('/events/:id', ensureAuthenticated, events.updateEvent);
 //Delete event
