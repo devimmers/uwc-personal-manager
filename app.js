@@ -32,18 +32,7 @@ app.configure(function () {
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(passport.initialize());
     app.use(passport.session());
-    app.use(function(req, res, next) {
-        if(req.isAuthenticated()) {
-            res.locals.user = req.user
-        }
-        var msgs = req.session.messages || []
-        res.locals({
-            messages: msgs,
-            hasMessages: !! msgs.length
-        })
-        req.session.messages = []
-        next()
-    });
+
     app.use(app.router);
     app.use(express.static(path.join(__dirname, 'public')));
 });
@@ -52,7 +41,7 @@ app.configure(function () {
 passportConfig();
 
 // POST /login
-app.post('/login', passport.authenticate('local', { successRedirect: '/notes', failureRedirect: '/login' }));
+app.post('/login', passport.authenticate('local', { successRedirect: '/notes'}));
 //Get logout action
 app.get('/logout', users.logout);
 //Get register action
@@ -92,13 +81,17 @@ app.get('/events', ensureAuthenticated, events.findUserEvents);
 // Find event by id
 app.get('/events/:id', ensureAuthenticated, events.findById);
 //Add new event
-app.post('/addEvent', ensureAuthenticated, events.addEvent);
+app.post('/addTask', ensureAuthenticated, events.addEvent);
 // Update event
 app.put('/events/:id', ensureAuthenticated, events.updateEvent);
 //Delete event
 app.delete('/events/:id', ensureAuthenticated, events.deleteEvent);
 //Tasks count
 app.get('/eventsCount', ensureAuthenticated, events.eventsCount);
+
+app.get(/^\/app(\/\w+)*$/, function(req, res) {
+    // Render the app...
+});
 
 
 //Start app
