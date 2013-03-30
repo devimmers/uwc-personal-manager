@@ -1,15 +1,15 @@
 var User = require('./models/models').userModel,
-     passport = require('passport'),
-     LocalStrategy = require('passport-local').Strategy;
+    passport = require('passport'),
+    LocalStrategy = require('passport-local').Strategy;
 
-module.exports = function() {
+module.exports = function () {
     //Login strategy
     passport.use(new LocalStrategy(
         {
-            usernameField:'email'
+            usernameField: 'email'
         },
-        function(email, password, done) {
-            User.findOne({'email': email}, function(err, user) {
+        function (email, password, done) {
+            User.findOne({'email': email}, function (err, user) {
                 if (err) {
                     return done(err);
                 } else if (!user) {
@@ -22,12 +22,32 @@ module.exports = function() {
     ));
 
     //Passport settings
-    passport.serializeUser(function(user, done) {
-        done(null, user._id);
+    passport.serializeUser(function (user, done) {
+        var createAccessToken = function () {
+            var token = user.generateRandomToken();
+            User.findOne({ accessToken: token }, function (err, existingUser) {
+                if (err) {
+                    return done(err);
+                }
+                if (existingUser) {
+                    createAccessToken(); // Run the function again - the token has to be unique!
+                } else {
+                    user.set('accessToken', token);
+                    user.save(function (err) {
+                        if (err) return done(err);
+                        return done(null, user.get('accessToken'));
+                    })
+                }
+            });
+        };
+
+        if (user._id) {
+            createAccessToken();
+        }
     });
 
-    passport.deserializeUser(function(id, done) {
-        User.findById(id, function (err, user) {
+    passport.deserializeUser(function (token, done) {
+        User.findOne({accessToken: token }, function (err, user) {
             done(err, user);
         });
     });

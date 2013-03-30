@@ -8,6 +8,7 @@ var userSchema = Schema({
     password: {type: String, required: true},
     email: {type:String, required: true, unique: true},
     creationDate: {type: Date, default: Date.now},
+    accessToken: { type: String },
     notes: [{type: Schema.Types.ObjectId, ref: 'Note'}],
     events: [{type: Schema.Types.ObjectId, ref: 'Event'}],
     tasks:[{type:Schema.Types.ObjectId, ref:'Task'}]
@@ -51,6 +52,17 @@ userSchema.methods.validPassword = function(password, done) {
             message: 'Invalid Password'
         });
     }
+};
+
+userSchema.methods.generateRandomToken = function () {
+    var user = this,
+          chars = "_!abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+          token = new Date().getTime() + '_';
+    for ( var x = 0; x < 16; x++ ) {
+        var i = Math.floor( Math.random() * 62 );
+        token += chars.charAt( i );
+    }
+    return token;
 };
 
 var Note = mongoose.model('Note', noteSchema);
