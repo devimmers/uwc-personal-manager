@@ -5,6 +5,8 @@ var express = require('express'),
 var config = require('./config').config,
     users = require('./routes/users'),
     notes = require('./routes/notes'),
+    tasks = require('./routes/tasks'),
+    events = require('./routes/events'),
     passportConfig = require("./passport-config"),
     passport = require('passport'),
     mongoose = require('mongoose');
@@ -65,8 +67,32 @@ app.get('/notes/:id', ensureAuthenticated, notes.findById);
 app.post('/addNote', ensureAuthenticated, notes.addNote);
 // Update note
 app.put('/notes/:id', ensureAuthenticated, notes.updateNote);
-//Delete item
+//Delete note
 app.delete('/notes/:id', ensureAuthenticated, notes.deleteNote);
+
+//Task area
+//Get list all user tasks
+app.get('/tasks', ensureAuthenticated, tasks.findUserTasks);
+// Find task by id
+app.get('/tasks/:id', ensureAuthenticated, tasks.findById);
+//Add new task
+app.post('/addTask', ensureAuthenticated, tasks.addTask);
+// Update task
+app.put('/tasks/:id', ensureAuthenticated, tasks.updateTask);
+//Delete task
+app.delete('/tasks/:id', ensureAuthenticated, tasks.deleteTask);
+
+//Event area
+//Get list all user event
+app.get('/events', ensureAuthenticated, events.findUserEvents);
+// Find event by id
+app.get('/events/:id', ensureAuthenticated, events.findById);
+//Add new event
+app.post('/addTask', ensureAuthenticated, events.addEvent);
+// Update event
+app.put('/events/:id', ensureAuthenticated, events.updateEvent);
+//Delete event
+app.delete('/events/:id', ensureAuthenticated, events.deleteEvent);
 
 
 //Start app

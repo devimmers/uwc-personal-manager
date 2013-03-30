@@ -87,7 +87,7 @@ Notes Actions:
 			... will be soon, now only status			
 				
 	Delete note:
-		Put with 1 parameter:
+		Delete with 1 parameter:
 			/notes/:id - id of Note
 		Example:
 			http://localhost:3000/notes/5156be0c57a63d8c0b000002
