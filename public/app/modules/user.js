@@ -16,12 +16,13 @@ function(app) {
       // username: "", //String,
       email: "", //String
       password: "", //String,
-      state: ""
+      token: ""
     },
-    // url: "login",
+    url: "login",
     // urlRoot: "/",
     initialize:  function() {
       this.on("change", this.log);
+      this.fetch();
     },
 
     log: function() {
@@ -35,7 +36,7 @@ function(app) {
         type: 'POST',
         data: user.toJSON(),
         success: function(data, textStatus, xhr) {
-          user.set("state", "logined");
+          user.set("token", data);
         },
         error: function(xhr, textStatus, errorThrown) {
           app.log(xhr);
