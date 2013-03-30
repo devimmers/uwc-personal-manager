@@ -66,3 +66,13 @@ exports.deleteNote = function(req, res) {
     });
 };
 
+exports.noteCount = function(req, res) {
+    console.log('Find all user notes');
+    Note.count({_user:req.user._id}, function(error, count){
+        if (error) {
+            console.log("Error by finding notes");
+        }
+        res.send({count:count});
+    });
+};
+

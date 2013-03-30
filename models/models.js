@@ -4,9 +4,9 @@ var mongoose = require('mongoose'),
 //User Schema, relationship:
 // User:Note -  1:M
 var userSchema = Schema({
-    username: {type: String, required: true},
+    username: {type: String, required: false},
     password: {type: String, required: true},
-    email: {type:String, required: true},
+    email: {type:String, required: true, unique: true},
     creationDate: {type: Date, default: Date.now},
     notes: [{type: Schema.Types.ObjectId, ref: 'Note'}],
     events: [{type: Schema.Types.ObjectId, ref: 'Event'}],
@@ -62,7 +62,7 @@ var User =  mongoose.model('User', userSchema);
 function testUserInit() {
 
     for(var i=0; i<5; i++) {
-        var testUser = new User({username:"Bob"+i, password:"123", email:"test@mail.com"});
+        var testUser = new User({username:"Bob"+i, password:"123", email:"test" + i +"@mail.com"});
 
         testUser.save(function(err){
             if (err) {

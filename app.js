@@ -69,6 +69,8 @@ app.post('/addNote', ensureAuthenticated, notes.addNote);
 app.put('/notes/:id', ensureAuthenticated, notes.updateNote);
 //Delete note
 app.delete('/notes/:id', ensureAuthenticated, notes.deleteNote);
+//Notes count
+app.get('/notesCount', ensureAuthenticated, notes.noteCount);
 
 //Task area
 //Get list all user tasks
