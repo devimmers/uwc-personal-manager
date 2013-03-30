@@ -12,7 +12,8 @@ function(app, User, Note) {
     routes: {
       "": "index",
       "login": "index",
-      "usernotes": "notes"
+      "usernotes": "notes",
+      "usernotes/:id": "editNotes"
     },
 
     initialize: function() {
@@ -46,6 +47,18 @@ function(app, User, Note) {
           })
         ).render();
         this.notes.fetch();
+      } else {
+        this.navigate("/", {trigger: true});
+      }
+    },
+
+    editNotes: function(id) {
+      if (this.checkAuth()) {
+        app.useLayout(main).setView(
+          new Note.Views.Edit({
+            model: this.notes.get(id)
+          })
+        ).render();
       } else {
         this.navigate("/", {trigger: true});
       }

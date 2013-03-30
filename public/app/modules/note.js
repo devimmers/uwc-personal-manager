@@ -92,6 +92,39 @@ function(app) {
     }
   });
 
+  Note.Views.Edit = Backbone.View.extend({
+    template: "note/edit",
+    tagName: "form",
+    className: "form-horizontal",
+
+    events: {
+      "click #update-note": "updateNote",
+      "click .js-delete": "delNote"
+    },
+
+    updateNote: function(e) {
+      e.preventDefault();
+
+      this.model.save({
+        "title": this.$el.find("[name='title']").val(),
+        "description": this.$el.find("[name='description']").val()
+      });
+    },
+
+    delNote: function(e) {
+      e.preventDefault();
+
+      this.model.destroy();
+      this.remove();
+
+      app.router.navigate("/usernotes", {trigger: true});
+    },
+
+    serialize: function() {
+      return this.model.toJSON();
+    }
+  });
+
   // Return the module for AMD compliance.
   return Note;
 

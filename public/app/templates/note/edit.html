@@ -1,0 +1,17 @@
+<div class="control-group">
+	<label for="title" class="control-label">Note title:</label>
+	<div class="controls">
+		<input type="text" name="title" id="title" value="<%= title %>">
+	</div>
+</div>
+<div class="control-group">
+	<label for="description" class="control-label">Note description:</label>
+	<div class="controls">
+		<textarea row="3" name="description" id="description"><%= description %></textarea>
+	</div>
+</div>
+<div class="form-actions">
+	<button class="btn btn-primary" type="submit" id="update-note">Update note</button>
+	<button class="btn btn-warning js-delete">Delete note</button>
+	<a href="/usernotes" class="btn btn-info">Back</a>
+</div>
