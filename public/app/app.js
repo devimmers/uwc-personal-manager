@@ -45,6 +45,14 @@ function(LayoutManager) {
 
   // Mix Backbone.Events, modules, and layout management into the app object.
   return _.extend(app, {
+    //console log helper
+    debug: true,
+
+    log: function(obj) {
+      if(this.debug)
+        return console.log(obj);
+    },
+
     // Create a custom object with a nested Views object.
     module: function(additionalProps) {
       return _.extend({ Views: {} }, additionalProps);

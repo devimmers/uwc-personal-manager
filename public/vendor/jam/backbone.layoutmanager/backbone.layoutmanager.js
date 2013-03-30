@@ -1,5 +1,5 @@
 /*!
- * backbone.layoutmanager.js v0.8.6
+ * backbone.layoutmanager.js v0.8.7
  * Copyright 2013, Tim Branyen (@tbranyen)
  * backbone.layoutmanager.js may be freely distributed under the MIT license.
  */
@@ -424,13 +424,20 @@ var LayoutManager = Backbone.View.extend({
       if (rendered) {
         // If no container is specified, we must replace the content.
         if (manager.noel) {
-          // Hold a reference to created element as replaceWith doesn't return new el.
+          // Trim off the whitespace, since the contents are passed into `$()`.
+          rendered = $.trim(rendered);
+
+          // Hold a reference to created element as replaceWith doesn't return
+          // new el.
           renderedEl = $(rendered);
 
-          // Remove extra root elements
+          // Remove extra root elements.
           root.$el.slice(1).remove();
 
+          // Swap out the View on the first top level element to avoid
+          // duplication.
           root.$el.replaceWith(renderedEl);
+
           // Don't delegate events here - we'll do that in resolve()
           root.setElement(renderedEl, false);
         } else {
@@ -686,8 +693,8 @@ var LayoutManager = Backbone.View.extend({
       // Merge the View options into the View.
       _.extend(view, viewOptions);
 
-      // If the View still has the Backbone.View#render method, remove it.  Don't
-      // want it accidentally overriding the LM render.
+      // If the View still has the Backbone.View#render method, remove it.
+      // Don't want it accidentally overriding the LM render.
       if (viewOverrides.render === LayoutManager.prototype.render ||
         viewOverrides.render === Backbone.View.prototype.render) {
         delete viewOverrides.render;
@@ -729,8 +736,8 @@ var LayoutManager = Backbone.View.extend({
       // Ensure the render is always set correctly.
       view.render = LayoutManager.prototype.render;
 
-      // If the user provided their own remove override, use that instead of the
-      // default.
+      // If the user provided their own remove override, use that instead of
+      // the default.
       if (view.remove !== proto.remove) {
         view._remove = view.remove;
         view.remove = proto.remove;
@@ -766,7 +773,7 @@ var LayoutManager = Backbone.View.extend({
 // Convenience assignment to make creating Layout's slightly shorter.
 Backbone.Layout = LayoutManager;
 // Tack on the version.
-LayoutManager.VERSION = "0.8.6";
+LayoutManager.VERSION = "0.8.7";
 
 // Override _configure to provide extra functionality that is necessary in
 // order for the render function reference to be bound during initialize.

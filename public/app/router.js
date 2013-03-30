@@ -1,10 +1,10 @@
 define([
   // Application.
   "app",
-  "modules/wine"
+  "modules/user"
 ],
 
-function(app, Wine) {
+function(app, User) {
 
   // Defining the application router, you can attach sub routers here.
   var Router = Backbone.Router.extend({
@@ -14,10 +14,10 @@ function(app, Wine) {
 
     index: function() {
       app.useLayout(main).setView(
-        new Wine.Views.Layout({
-          collection: new Wine.Collection
+        new User.Views.Login({
+          model: new User.Model
         })
-      );
+      ).render();
     }
   });
 
