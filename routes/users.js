@@ -1,4 +1,4 @@
-var User = require('../models/models.js').userModel;
+var User = require('../models/models.js').model;
 
 exports.logout = function(req, res) {
     req.logOut();
@@ -12,11 +12,11 @@ exports.register = function(req, res) {
     console.log('Add user: ' + JSON.stringify(newUser));
     newUser.save(function(err){
         if (err) {
-            console.log("Error by save user");
+            console.log("Error saved");
             res.send("Fail");
             throw err;
         }
-        console.log("User was saved");
+        console.log("Saved");
         res.send("Succesed");
         res.redirect('/login');
     });
