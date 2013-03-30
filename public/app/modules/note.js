@@ -17,7 +17,8 @@ function(app) {
 
   // Default Collection.
   Note.Collection = Backbone.Collection.extend({
-    model: Note.Model
+    model: Note.Model,
+    url: "/notes"
   });
 
   // Default View.

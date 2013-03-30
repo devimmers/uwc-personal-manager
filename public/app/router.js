@@ -1,22 +1,24 @@
 define([
   // Application.
   "app",
-  "modules/user"
+  "modules/user",
+  "modules/note"
 ],
 
-function(app, User) {
+function(app, User, Note) {
 
   // Defining the application router, you can attach sub routers here.
   var Router = Backbone.Router.extend({
     routes: {
       "": "index",
-      "/login": "index",
-      "/usernotes": "notes"
+      "login": "index",
+      "usernotes": "notes"
     },
 
     initialize: function() {
       var entity = {
-        user: new User.Model
+        user: new User.Model,
+        notes: new Note.Collection
       };
 
       _(this).extend(entity);
@@ -24,8 +26,8 @@ function(app, User) {
     },
 
     checkAuth: function() {
-      if (this.user.get("state") == "")
-        return this.navigate("/", {trigger: true});
+      if (this.user.get("state") == "logined")
+        return true;
     },
 
     index: function() {
@@ -37,11 +39,17 @@ function(app, User) {
     },
 
     notes: function() {
-      //this.checkAuth();
+      if (this.checkAuth()) {
+        app.useLayout(main).setView(
+          new Note.Views.Layout({
+            collection: this.notes
+          })
+        );
+        this.notes.fetch();
       app.log("ahoy!");
-      // app.useLayout(main).setView({
-
-      // });
+      } else {
+        this.navigate("/", {trigger: true});
+      }
     }
 
 

@@ -60,7 +60,7 @@ function(app) {
     },
 
     initialize: function() {
-
+      this.listenTo(this.model, "change", this.render);
     },
 
     login: function(e) {
@@ -73,6 +73,10 @@ function(app) {
       //   app.log(resp);
       // }});
       this.model.login();
+    },
+
+    serialize: function() {
+      return this.model.toJSON();
     }
 
   });
