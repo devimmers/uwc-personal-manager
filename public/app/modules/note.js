@@ -27,12 +27,12 @@ function(app) {
     tagName: "ul",
 
     initialize: function() {
-      this.listenTo(this.collection, "change reset", this.render);
+      this.listenTo(this.collection, "add reset", this.render);
     },
 
     beforeRender: function() {
       this.collection.each(function(item) {
-        this.insertView("li", new Note.Views.Item({
+        this.insertView( new Note.Views.Item({
           model: item
         }));
       },this);
@@ -41,9 +41,14 @@ function(app) {
 
   Note.Views.Item = Backbone.View.extend({
     template: "note/item",
+    tagName: "li",
 
     serialize: function() {
       return this.model.toJSON();
+    },
+
+    afterRender: function() {
+      app.log(this.model.toJSON());
     }
   });
 
