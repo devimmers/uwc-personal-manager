@@ -15,13 +15,14 @@ function(app) {
     idAtrribute: "_id",
     defaults:{
       title: "",//String,
-      description: ""//String,
+      description: "",//String,
+      creationDate: ""
     },
     initialize: function() {
       if (this.isNew())
         this.save()
-    },
-    url: "/notes"
+    }//,
+    // url: "/notes"
   });
 
   // Default Collection.
@@ -45,6 +46,7 @@ function(app) {
 
     events: {
       "click #send-note": "addNote"
+
     },
 
     initialize: function() {
@@ -60,6 +62,7 @@ function(app) {
       });
     },
 
+
     beforeRender: function() {
       this.collection.each(function(item) {
         this.insertView( new Note.Views.Item({
@@ -72,6 +75,17 @@ function(app) {
   Note.Views.Item = Backbone.View.extend({
     template: "note/item",
     tagName: "li",
+
+    events: {
+      "click .js-delete": "delNote"
+    },
+
+    delNote: function(e) {
+      e.preventDefault();
+
+      this.model.destroy();
+      this.remove();
+    },
 
     serialize: function() {
       return this.model.toJSON();

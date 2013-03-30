@@ -44,7 +44,7 @@ function(app, User, Note) {
           new Note.Views.Layout({
             collection: this.notes
           })
-        );
+        ).render();
         this.notes.fetch();
       } else {
         this.navigate("/", {trigger: true});
