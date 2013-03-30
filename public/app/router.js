@@ -26,7 +26,7 @@ function(app, User, Note) {
     },
 
     checkAuth: function() {
-      if (this.user.get("state") == "logined")
+      if (this.user.get("token") != "")
         return true;
     },
 
@@ -46,7 +46,6 @@ function(app, User, Note) {
           })
         );
         this.notes.fetch();
-      app.log("ahoy!");
       } else {
         this.navigate("/", {trigger: true});
       }
