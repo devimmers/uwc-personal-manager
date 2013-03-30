@@ -65,3 +65,14 @@ exports.deleteEvent = function(req, res) {
         res.send("Succesed");
     });
 };
+
+//Counting all user events
+exports.eventsCount = function(req, res) {
+    console.log('Get all events count');
+    Event.count({_user:req.user._id}, function(error, count){
+        if (error) {
+            console.log("Error by counting events");
+        }
+        res.send({count:count});
+    });
+};

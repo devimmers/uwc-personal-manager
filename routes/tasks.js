@@ -65,3 +65,15 @@ exports.deleteTask = function(req, res) {
         res.send("Succesed");
     });
 };
+
+//Counting all user tasks
+exports.tasksCount = function(req, res) {
+    console.log('Get all tasks count');
+    Task.count({_user:req.user._id}, function(error, count){
+        if (error) {
+            console.log("Error by counting tasks");
+        }
+        res.send({count:count});
+    });
+};
+

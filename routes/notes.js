@@ -66,11 +66,12 @@ exports.deleteNote = function(req, res) {
     });
 };
 
-exports.noteCount = function(req, res) {
-    console.log('Find all user notes');
+//Counting all user notes
+exports.notesCount = function(req, res) {
+    console.log('Get all notes count');
     Note.count({_user:req.user._id}, function(error, count){
         if (error) {
-            console.log("Error by finding notes");
+            console.log("Error by counting notes");
         }
         res.send({count:count});
     });

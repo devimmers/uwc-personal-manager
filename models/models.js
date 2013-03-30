@@ -113,7 +113,7 @@ function testUserInit() {
     }
 }
 
-testUserInit();
+//testUserInit();
 
 exports.userModel = User;
 exports.userSchema = userSchema

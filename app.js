@@ -70,7 +70,7 @@ app.put('/notes/:id', ensureAuthenticated, notes.updateNote);
 //Delete note
 app.delete('/notes/:id', ensureAuthenticated, notes.deleteNote);
 //Notes count
-app.get('/notesCount', ensureAuthenticated, notes.noteCount);
+app.get('/notesCount', ensureAuthenticated, notes.notesCount);
 
 //Task area
 //Get list all user tasks
@@ -83,6 +83,8 @@ app.post('/addTask', ensureAuthenticated, tasks.addTask);
 app.put('/tasks/:id', ensureAuthenticated, tasks.updateTask);
 //Delete task
 app.delete('/tasks/:id', ensureAuthenticated, tasks.deleteTask);
+//Tasks count
+app.get('/tasksCount', ensureAuthenticated, tasks.tasksCount);
 
 //Event area
 //Get list all user event
@@ -95,6 +97,8 @@ app.post('/addTask', ensureAuthenticated, events.addEvent);
 app.put('/events/:id', ensureAuthenticated, events.updateEvent);
 //Delete event
 app.delete('/events/:id', ensureAuthenticated, events.deleteEvent);
+//Tasks count
+app.get('/eventsCount', ensureAuthenticated, events.eventsCount);
 
 
 //Start app
