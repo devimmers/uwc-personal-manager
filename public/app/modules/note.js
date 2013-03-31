@@ -15,11 +15,17 @@ function(app) {
     defaults:{
       title: "",//String,
       description: "",//String,
-      creationDate: ""
+      creationDate: "",
+      href: ""
     },
     initialize: function(item) {
       if (this.isNew())
         this.save(item, {wait: true});
+    },
+
+    parse: function(resp) {
+      resp.href = resp._id;
+      return resp;
     }//,
     // url: "/notes"
   });
