@@ -44,6 +44,10 @@ function(app) {
       "click #login": "login"
     },
 
+    initialize: function() {
+      this.listenTo(this.model, "change", this.render);
+    },
+
     login: function(e) {
       e.preventDefault();
       this.model.save({
