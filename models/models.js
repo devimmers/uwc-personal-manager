@@ -25,7 +25,7 @@ var userSchema = Schema({
 var noteSchema = Schema({
     _user: { type: Schema.Types.ObjectId, ref: 'User' },
     title: String,
-    description: String,
+    updateDate: {type: Date},
     creationDate: {type: Date, default: Date.now}
 });
 
@@ -115,12 +115,13 @@ function testUserInit() {
                 console.log("Error saved");
                 throw err;
             }
+            var testUpdateDate = new Date("October 2" + i +", 2013 11:13:00")
 
             //Test note init
             var note = new Note({
                 _user : testUser._id,
-                title : "Test note" + i,
-                description: "Test note description"
+                text: "Hey, here is test note",
+                updateDate: testUpdateDate
             });
 
             var task = new Task({
