@@ -8,41 +8,40 @@ User Actions:
 		Post with 2 parameters: 
 			email, password
 		Example:
-			http://localhost:3000/login
+			http://localhost:3000/enter
 		Post parameters:
-			email: Bob4
+			email: Bob4@mail.com
 			password: 123
 		Response:
 			return accessToken with format: {token:token}
 
 	Get token:
 	    Get without parameters:
-	        Get request to /login
+	        Get request to /enter
     	Example:
-	        http://localhost:3000/login
+	        http://localhost:3000/enter
         Response:
             token in format {token:token}, or empty document - if user not authenticated
 
 	Registration:
-		Post with 3(first iteration 3, will be increase) parameters:
-			email, password, email
+		Post with 3(first iteration 3, will be increase) parameters and status must be 'new':
+			email, password, status
 		Example:
 			http://localhost:3000/registration
 		Post parameters:
-			username: NewUser
 			password: 123
 			email: test@gmail.com
+			status: new
 		Response:
-			...
-			redirect to login page(GET /login) - (onSucces action)
+			return JSON document: {token:'value'}
 
 	Logout:
-		Get without parameters
+		Delete without parameters
 		Example:
-			http://localhost:3000/login
+			http://localhost:3000/delete
 		Response:
 			...
-			redirect to login page(GET /login) - (onSucces action)
+			return JSON with status: {'status':'Success'}
 		
 -----------------------NOTES---------------------------------------------		
 All notes actions can done only when user in authenticated.
@@ -135,7 +134,7 @@ Tasks Actions:
 					"_id": "51571333c455026c5f000007",
 					"__v": 0,
 					"taskDate": "2013-03-30T16:30:43.314Z",
-					"creationDate": "2013-03-30T16:30:43.314Z"
+					"startDate": "2013-03-30T16:30:43.314Z"
 				}
 	
 	Show one task by id:
@@ -154,7 +153,7 @@ Tasks Actions:
 				"_id": "51571333c455026c5f000007",
 				"__v": 0,
 				"taskDate": "2013-03-30T16:30:43.314Z",
-				"creationDate": "2013-03-30T16:30:43.314Z"
+				"startDate": "2013-03-30T16:30:43.314Z"
 			}
 
 	Add task:
@@ -212,7 +211,7 @@ Events Actions:
 				"_id": "51571333c455026c5f000014",
 				"__v": 0,
 				"eventDate": "2013-03-30T16:30:43.322Z",
-				"creationDate": "2013-03-30T16:30:43.322Z"
+				"startDate": "2013-03-30T16:30:43.322Z"
 			}
 	
 	Show one event by id:
@@ -231,7 +230,7 @@ Events Actions:
 				"_id": "51571333c455026c5f000014",
 				"__v": 0,
 				"eventDate": "2013-03-30T16:30:43.322Z",
-				"creationDate": "2013-03-30T16:30:43.322Z"
+				"startDate": "2013-03-30T16:30:43.322Z"
 			}
 			
 	Add event:
@@ -268,4 +267,31 @@ Events Actions:
 		Response:
 			JSON document, with structure:
 				{ count: '5'}
-			
+
+---------------------------List-------------------------------------
+Return list of all event and task, for listview. And can add new item(event or task)
+    Show all items:
+		Get without parameters
+		Example:
+			http://localhost:3000/list
+		Response:
+		    {
+		        "type": "event",
+				"_user": "51571332c455026c5f000005",
+				"title": "Test Event5",
+				"description": "Event description here",
+				"priority": 5,
+				"state": true,
+				"_id": "51571333c455026c5f000014",
+				"__v": 0,
+				"eventDate": "2013-03-30T16:30:43.322Z",
+				"startDate": "2013-03-30T16:30:43.322Z"
+			}
+
+		Add item:
+    		Post with parameters:
+    			title, description, priority, state, startDate, type
+    		Example:
+    			http://localhost:3000/list
+    		Response:
+    		    return _id of added event in format: {"_id":_id}

@@ -15,7 +15,6 @@ module.exports = function () {
                 if (err) {
                     return done(err);
                 } else if (!user) {
-
                     return done(null, false, { message: 'Unknown User' });
                 } else {
                     return user.validPassword(password, done);
