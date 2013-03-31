@@ -13,31 +13,27 @@ exports.login = function(req, res, next) {
         if (err) { return next(err) }
         if (!user) {
             req.session.messages =  [info.message];
-
-            if(req.session.messages[0] === 'Unknown User') {
-
-                if(req.body.status == 'new') {
-                    var userBody = req.body;
-                    var newUser = new User(userBody);
-                    console.log('Add user: ' + JSON.stringify(newUser));
-                    newUser.save(function(err){
+            if(req.session.messages[0] === 'Unknown User' && req.body.status == 'new') {
+                var userBody = req.body;
+                var newUser = new User(userBody);
+                console.log('Add user: ' + JSON.stringify(newUser));
+                newUser.save(function(err){
+                    if (err) {
+                        console.log("Error saved");
+                        res.send("Fail");
+                    }
+                    console.log("Saved");
+                    req.login(newUser, function(err) {
                         if (err) {
-                            console.log("Error saved");
-                            res.send("Fail");
+                            return req.send({"Status":"Error"});
                         }
-                        console.log("Saved");
-                        req.login(newUser, function(err) {
-                            if (err) {
-                                return req.send({"Status":"Error"});
-                            }
-                            return res.send({"token":newUser.get('accessToken')});
-
-                        });
+                        return res.send({"token":newUser.get('accessToken')});
                     });
-                    (req, res, next);
-                }
+                });
+                (req, res, next);
+            } else {
+                return res.send(req.session.messages);
             }
-            return res.send(req.session.messages);
         }
 
         req.logIn(user, function(err) {
@@ -56,9 +52,6 @@ exports.getToken = function(req, res) {
     res.send({token:token});
 };
 
-function enter(req,res) {
-
-}
 
 // Add new user
 exports.register = function(req, res) {
