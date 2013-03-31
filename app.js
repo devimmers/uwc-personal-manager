@@ -45,7 +45,7 @@ app.configure('development', function(){
 //Passport settings
 passportConfig();
 
-app.get('/auth/facebook', passport.authenticate('facebook'),
+app.get('/enter/facebook', passport.authenticate('facebook'),
     function(req, res){
 });
 
