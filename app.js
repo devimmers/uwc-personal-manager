@@ -53,15 +53,12 @@ app.get('/auth/facebook/callback',
 });
 
 
-// POST /login
+// POST login or registration method
 app.post('/enter', users.login);
-
 //Get user token
 app.get('/enter', users.getToken);
 //Get logout action
 app.delete('/enter', users.logout);
-//Get register action
-app.post('/register', users.register);
 
 //Note area
 //Get list all user notes

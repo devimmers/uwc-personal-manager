@@ -35,7 +35,7 @@ var taskSchema = Schema({
     title: String,
     description: String,
     creationDate: {type: Date, default: Date.now},
-    taskDate: {type: Date, default: Date.now},
+    startDate: {type: Date, default: Date.now},
     priority: Number,
     state: Boolean   // Active or not
 });
@@ -46,7 +46,7 @@ var eventSchema = Schema({
     title: String,
     description: String,
     creationDate: {type: Date, default: Date.now},
-    eventDate: {type: Date, default: Date.now},
+    startDate: {type: Date, default: Date.now},
     priority: Number,
     state: Boolean    //Active or not
 });
