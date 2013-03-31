@@ -93,8 +93,7 @@ function(app) {
       this.$el.find(".js-save").show();
 
       $(document).on("click", function(evt) {
-        // app.log(evt.target === e.currentTarget);
-        if (evt.target !== e.currentTarget) {
+        if (evt.target !== e.target) {
           self.update(evt);
         };
       });
@@ -113,7 +112,7 @@ function(app) {
 
       this.$el.find(".js-save").hide();
 
-      $(document).off();
+      $(document).off("click", "**");
     },
 
     //deleting model from collection and server + deleting view
