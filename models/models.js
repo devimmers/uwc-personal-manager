@@ -24,7 +24,7 @@ var userSchema = Schema({
 //Note Schema, M:1 to User
 var noteSchema = Schema({
     _user: { type: Schema.Types.ObjectId, ref: 'User' },
-    title: String,
+    text: String,
     updateDate: {type: Date},
     creationDate: {type: Date, default: Date.now}
 });
@@ -160,7 +160,7 @@ function testUserInit() {
     }
 }
 
-//testUserInit();
+// testUserInit();
 
 exports.userModel = User;
 exports.userSchema = userSchema

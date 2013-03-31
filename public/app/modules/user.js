@@ -36,7 +36,8 @@ function(app) {
 
     events: {
       "click #login": "login",
-      "click #logout": "logout"
+      "click #logout": "logout",
+      "click #fb-login": "fb-login"
     },
 
     initialize: function() {
@@ -71,6 +72,25 @@ function(app) {
 
     serialize: function() {
       return this.model.toJSON();
+    },
+
+    "fb-login": function() {
+      
+      $.ajax({
+        url: '/enter/facebook',
+        type: 'GET',
+        data: {},
+        complete: function(xhr, textStatus) {
+          //called when complete
+        },
+        success: function(data, textStatus, xhr) {
+          //called when successful
+        },
+        error: function(xhr, textStatus, errorThrown) {
+          //called when there is an error
+        }
+      });
+      
     }
 
   });
