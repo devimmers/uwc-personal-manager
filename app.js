@@ -7,6 +7,7 @@ var config = require('./config').config,
     notes = require('./routes/notes'),
     tasks = require('./routes/tasks'),
     events = require('./routes/events'),
+    eventAndTasks = require('./routes/event-and-task'),
     passportConfig = require("./passport-config"),
     passport = require('passport'),
     mongoose = require('mongoose');
@@ -103,6 +104,11 @@ app.patch('/events/:id', ensureAuthenticated, events.updateEvent);
 app.delete('/events/:id', ensureAuthenticated, events.deleteEvent);
 //Tasks count
 app.get('/events/eventsCount', ensureAuthenticated, events.eventsCount);
+
+//Get full list
+app.get('/list', ensureAuthenticated, eventAndTasks.findEventAndTask);
+//Add new event
+app.post('/list', ensureAuthenticated, eventAndTasks.addItem);
 
 app.get('/*',function(req,res) {
     res.render('index.html');
