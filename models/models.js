@@ -7,12 +7,15 @@ var mongoose = require('mongoose'),
 // User:Task -  1:M
 var userSchema = Schema({
     username: {type: String, required: false},
+    firstName: {type: String},
+    lastName: {type: String},
     password: {type: String, required: true},
     email: {type:String, required: true, unique: true},
     sex: {type: String},
     birthDate : {type: Date},
     creationDate: {type: Date, default: Date.now},
     accessToken: { type: String },
+    facebookId: String,
     notes: [{type: Schema.Types.ObjectId, ref: 'Note'}],
     events: [{type: Schema.Types.ObjectId, ref: 'Event'}],
     tasks:[{type:Schema.Types.ObjectId, ref:'Task'}]
@@ -58,6 +61,25 @@ userSchema.methods.validPassword = function(password, done) {
             message: 'Invalid Password'
         });
     }
+};
+
+userSchema.methods.findOrCreate = function (name, facebookId, callback) {
+    User.findOne({ 'facebookId': facebookId }, function (err, user) {
+        if (user === null) {
+            var newUser = new User({
+                facebookId: facebookId,
+                name: {
+                    first: name.givenName,
+                    last: name.familyName
+                }
+            });
+            newUser.save(function(err) {
+                callback(newUser);
+            });
+        } else {
+            callback(user);
+        }
+    });
 };
 
 userSchema.methods.generateRandomToken = function () {

@@ -1,6 +1,8 @@
 var User = require('./models/models').userModel,
     passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy;
+    LocalStrategy = require('passport-local').Strategy,
+    FacebookStrategy = require('passport-facebook').Strategy,
+    config = require('./config').config;
 
 module.exports = function () {
     //Login strategy
@@ -13,13 +15,27 @@ module.exports = function () {
                 if (err) {
                     return done(err);
                 } else if (!user) {
-                    return done(null, false, { message: 'Uknown User' });
+
+                    return done(null, false, { message: 'Unknown User' });
                 } else {
                     return user.validPassword(password, done);
                 }
             });
         }
     ));
+
+    passport.use(new FacebookStrategy({
+        clientID: config.facebook.id,
+        clientSecret: config.facebook.secret,
+        callbackURL: "http://" + config.app.url + ':' + config.app.port + '/auth/facebook/callback'
+    }, function (accessToken, refreshToken, profile, done) {
+        process.nextTick(function () {
+            console.log(profile);
+            console.log(accessToken);
+            return done(null, profile);
+        });
+    }));
+
 
     //Passport settings
     passport.serializeUser(function (user, done) {
