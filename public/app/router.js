@@ -11,7 +11,7 @@ function(app, User, Note) {
   var Router = Backbone.Router.extend({
     routes: {
       "": "index",
-      "login": "index",
+      "main": "main",
       "usernotes": "notes",
       "usernotes/:id": "editNotes",
       "logout": "logout"
@@ -27,8 +27,17 @@ function(app, User, Note) {
 
       this.session = $.when(this.user.fetch());
 
-      this.listenTo(app, "enter", function() {app.log("enter!");});
-      this.listenTo(app, "enter", this.index);
+      // this.listenTo(app, "enter", function() {app.log("enter!");});
+      this.listenTo(app, "enter", this.auth);
+
+
+      this.main = app.useLayout(main);
+
+      this.main.setView(
+        new User.Views.Login({
+          model: this.user
+        })
+      ).render();
     },
 
 
@@ -42,6 +51,16 @@ function(app, User, Note) {
       });
     },
 
+    auth: function() {
+      var self = this;
+      this.session.done(function() {
+        if (self.user.get("token") != "")
+          self.navigate("/main", {trigger: true});
+        else
+          self.navigate("/", {trigger: true});
+      });
+    },
+
     preLoad: function(collection, callback) {
       var self = this;
       $.when(collection.fetch()).done(function() {
@@ -49,20 +68,34 @@ function(app, User, Note) {
       });
     },
 
-    index: function() {
-      var self = this,
-          main = app.useLayout(main);
 
-      main.setView(
+    index: function() {
+      var self = this;
+
+      this.main.setView(
         new User.Views.Login({
           model: this.user
         })
       ).render();
 
       this.session.done(function() {
-        app.log(self.user.get("token"));
+        if (self.user.get("token") != "")
+          self.navigate("/main", {trigger: true});
+      });
+    },
+
+    main: function() {
+      var self = this;
+
+      this.session.done(function() {
+        if (self.user.get("token") == "")
+          self.navigate("/", {trigger: true});
+      });
+
+      this.session.done(function() {
+        // app.log(self.user.get("token"));
         if (self.user.get("token") != ""){
-          main.insertViews(
+          self.main.insertViews(
             [new Note.Views.Layout({
                 collection: self.notes
               })
