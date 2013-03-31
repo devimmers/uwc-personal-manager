@@ -15,7 +15,6 @@ exports.login = function(req, res, next) {
             req.session.messages =  [info.message];
 
             if(req.session.messages[0] === 'Unknown User') {
-
                 if(req.body.status == 'new') {
                     var userBody = req.body;
                     var newUser = new User(userBody);
@@ -34,6 +33,7 @@ exports.login = function(req, res, next) {
 
                         });
                     });
+
                     (req, res, next);
                 }
             }
@@ -56,9 +56,6 @@ exports.getToken = function(req, res) {
     res.send({token:token});
 };
 
-function enter(req,res) {
-
-}
 
 // Add new user
 exports.register = function(req, res) {
