@@ -1,4 +1,4 @@
-var User = require('../models/models.js').model,
+var User = require('../models/models.js').userModel,
     passport = require('passport');
 
 //Logout action
@@ -13,13 +13,39 @@ exports.login = function(req, res, next) {
         if (err) { return next(err) }
         if (!user) {
             req.session.messages =  [info.message];
+
+            if(req.session.messages[0] === 'Unknown User') {
+
+                if(req.body.status == 'new') {
+                    var userBody = req.body;
+                    var newUser = new User(userBody);
+                    console.log('Add user: ' + JSON.stringify(newUser));
+                    newUser.save(function(err){
+                        if (err) {
+                            console.log("Error saved");
+                            res.send("Fail");
+                        }
+                        console.log("Saved");
+                        req.login(newUser, function(err) {
+                            if (err) {
+                                return req.send({"Status":"Error"});
+                            }
+                            return res.send({"token":newUser.get('accessToken')});
+
+                        });
+                    });
+                    (req, res, next);
+                }
+            }
             return res.send(req.session.messages);
         }
+
         req.logIn(user, function(err) {
             if (err) { return next(err); }
-            return res.send(user.get('accessToken'));
+            return res.send({"token":user.get('accessToken')});
         });
     })(req, res, next);
+
 };
 
 //Return user token
@@ -30,19 +56,26 @@ exports.getToken = function(req, res) {
     res.send({token:token});
 };
 
+function enter(req,res) {
+
+}
+
 // Add new user
 exports.register = function(req, res) {
-    var user = req.body;
-    var newUser = new User(user);
+    var userBody = req.body;
+    var newUser = new User(userBody);
     console.log('Add user: ' + JSON.stringify(newUser));
     newUser.save(function(err){
         if (err) {
             console.log("Error saved");
             res.send("Fail");
-            throw err;
         }
         console.log("Saved");
-        res.send("Succesed");
-        res.redirect('/login');
+        req.login(newUser, function(err) {
+            if (err) {
+                return req.send({"Status":"Error"});
+            }
+            return res.send({'token':newUser.get('accessToken')});
+        });
     });
 };

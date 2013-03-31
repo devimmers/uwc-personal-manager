@@ -41,13 +41,24 @@ app.configure(function () {
 //Passport settings
 passportConfig();
 
+app.get('/auth/facebook', passport.authenticate('facebook'),
+    function(req, res){
+});
+
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', { failureRedirect: '/login' }),
+    function(req, res) {
+        res.redirect('/');
+});
+
+
 // POST /login
-app.post('/login', users.login);
+app.post('/enter', users.login);
 
 //Get user token
-app.get('/login', users.getToken);
+app.get('/enter', users.getToken);
 //Get logout action
-app.get('/logout', users.logout);
+app.delete('/enter', users.logout);
 //Get register action
 app.post('/register', users.register);
 
