@@ -24,7 +24,7 @@ exports.addNote = function(req, res) {
             throw err;
         }
         console.log("Note was saved");
-        res.send("Succesed");
+        res.send({id:save_note._id});
     });
 };
 
