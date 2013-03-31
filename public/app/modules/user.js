@@ -18,7 +18,7 @@ function(app) {
       password: "", //String,
       token: ""
     },
-    url: "/login",
+    url: "/enter",
     //urlRoot: "/",
     initialize: function() {
       this.on("change", this.log);
