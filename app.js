@@ -39,18 +39,21 @@ app.configure(function () {
     app.use(express.static(path.join(__dirname, 'public')));
 });
 
+app.configure('development', function () {
+    app.use(express.errorHandler());
+});
+
 //Passport settings
 passportConfig();
 
-app.get('/auth/facebook', passport.authenticate('facebook'),
-    function(req, res){
-});
+app.get('/enter/facebook', passport.authenticate('facebook'),
+    function (req, res) {
+    });
 
-app.get('/auth/facebook/callback',
-    passport.authenticate('facebook', { failureRedirect: '/login' }),
-    function(req, res) {
+app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }),
+    function (req, res) {
         res.redirect('/');
-});
+    });
 
 
 // POST login or registration method
@@ -107,18 +110,20 @@ app.get('/list', ensureAuthenticated, eventAndTasks.findEventAndTask);
 //Add new event
 app.post('/list', ensureAuthenticated, eventAndTasks.addItem);
 
-app.get('/*',function(req,res) {
+app.get('/*', function (req, res) {
     res.render('index.html');
 });
 
 //Start app
-app.listen(app.get('port'), function() {
+app.listen(app.get('port'), function () {
     console.log("Server listening on port " + app.get('port'));
 });
 
 //TODO:Add full session support and hash with sold
 //Base chech for authentification
 function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) { return next(); }
+    if (req.isAuthenticated()) {
+        return next();
+    }
     res.redirect('/login')
 }

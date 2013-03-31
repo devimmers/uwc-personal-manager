@@ -9,16 +9,23 @@ var userSchema = Schema({
     username: {type: String, required: false},
     firstName: {type: String},
     lastName: {type: String},
-    password: {type: String, required: true},
-    email: {type:String, required: true, unique: true},
+    password: {type: String},
+    email: {type: String, unique: true},
     sex: {type: String},
-    birthDate : {type: Date},
+    birthDate: {type: Date},
     creationDate: {type: Date, default: Date.now},
     accessToken: { type: String },
-    facebookId: String,
-    notes: [{type: Schema.Types.ObjectId, ref: 'Note'}],
-    events: [{type: Schema.Types.ObjectId, ref: 'Event'}],
-    tasks:[{type:Schema.Types.ObjectId, ref:'Task'}]
+    facebookId: {type: String},
+    provider: {type: String},
+    notes: [
+        {type: Schema.Types.ObjectId, ref: 'Note'}
+    ],
+    events: [
+        {type: Schema.Types.ObjectId, ref: 'Event'}
+    ],
+    tasks: [
+        {type: Schema.Types.ObjectId, ref: 'Task'}
+    ]
 });
 
 //Note Schema, M:1 to User
@@ -53,7 +60,7 @@ var eventSchema = Schema({
 
 
 //Simple valid password method
-userSchema.methods.validPassword = function(password, done) {
+userSchema.methods.validPassword = function (password, done) {
     if (this.password === password) {
         return done(null, this);
     } else {
@@ -63,31 +70,13 @@ userSchema.methods.validPassword = function(password, done) {
     }
 };
 
-userSchema.methods.findOrCreate = function (name, facebookId, callback) {
-    User.findOne({ 'facebookId': facebookId }, function (err, user) {
-        if (user === null) {
-            var newUser = new User({
-                facebookId: facebookId,
-                name: {
-                    first: name.givenName,
-                    last: name.familyName
-                }
-            });
-            newUser.save(function(err) {
-                callback(newUser);
-            });
-        } else {
-            callback(user);
-        }
-    });
-};
 
 userSchema.methods.generateRandomToken = function () {
     var chars = "_!abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
         token = new Date().getTime() + '_';
-    for ( var x = 0; x < 16; x++ ) {
-        var i = Math.floor( Math.random() * 62 );
-        token += chars.charAt( i );
+    for (var x = 0; x < 16; x++) {
+        var i = Math.floor(Math.random() * 62);
+        token += chars.charAt(i);
     }
     return token;
 };
@@ -95,46 +84,46 @@ userSchema.methods.generateRandomToken = function () {
 var Note = mongoose.model('Note', noteSchema);
 var Task = mongoose.model('Task', taskSchema);
 var Event = mongoose.model('Event', eventSchema);
-var User =  mongoose.model('User', userSchema);
+var User = mongoose.model('User', userSchema);
 
 //Add test user data to bd
 function testUserInit() {
-    for(var i=0; i<5; i++) {
-        var testBithDate = new Date("October 1" + i +", 1975 11:13:00")
+    for (var i = 0; i < 5; i++) {
+        var testBithDate = new Date("October 1" + i + ", 1975 11:13:00")
 
         var testUser = new User({
-            username:"Bob"+i,
-            password:"123",
-            email:"test" + i +"@mail.com",
-            sex:"m",
+            username: "Bob" + i,
+            password: "123",
+            email: "test" + i + "@mail.com",
+            sex: "m",
             birthDate: testBithDate
         });
 
-        testUser.save(function(err){
+        testUser.save(function (err) {
             if (err) {
                 console.log("Error saved");
                 throw err;
             }
-            var testUpdateDate = new Date("October 2" + i +", 2013 11:13:00")
+            var testUpdateDate = new Date("October 2" + i + ", 2013 11:13:00")
 
             //Test note init
             var note = new Note({
-                _user : testUser._id,
+                _user: testUser._id,
                 text: "Hey, here is test note",
                 updateDate: testUpdateDate
             });
 
             var task = new Task({
-                _user : testUser._id,
-                title : "Test task" + i,
+                _user: testUser._id,
+                title: "Test task" + i,
                 description: "Task description here",
                 priority: i,
                 state: true    //Active or not
             });
 
             var event = new Event({
-                _user : testUser._id,
-                title : "Test Event" + i,
+                _user: testUser._id,
+                title: "Test Event" + i,
                 description: "Event description here",
                 priority: i,
                 state: true    //Active or not

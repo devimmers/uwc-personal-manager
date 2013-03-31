@@ -23,7 +23,7 @@ function(app) {
       if (this.isNew())
         this.save(item, {wait: true});
     },
-    //binding id for beter backbone intergation
+    //binding id for better backbone integration
     parse: function(resp) {
       resp.href = resp.id = resp._id;
       return resp;
