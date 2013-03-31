@@ -10,6 +10,7 @@ var config = require('./config').config,
     eventAndTasks = require('./routes/event-and-task'),
     passportConfig = require("./passport-config"),
     passport = require('passport'),
+    ensureAuthenticated = require('./lib/utils').ensureAuthenticated,
     mongoose = require('mongoose');
 
 mongoose.connect(config.mongo.adress);
@@ -63,47 +64,12 @@ app.get('/enter', users.getToken);
 //Get logout action
 app.delete('/enter', users.logout);
 
-//Note area
-//Get list all user notes
-app.get('/notes', ensureAuthenticated, notes.findUserNotes);
-// Find note by id
-app.get('/notes/:id', ensureAuthenticated, notes.findById);
-//Add new note
-app.post('/notes', ensureAuthenticated, notes.addNote);
-// Update note
-app.patch('/notes/:id', ensureAuthenticated, notes.updateNote);
-//Delete note
-app.delete('/notes/:id', ensureAuthenticated, notes.deleteNote);
-//Notes count
-app.get('/notes/notesCount', ensureAuthenticated, notes.notesCount);
-
+//Notes routes settings
+notes(app);
 //Task area
-//Get list all user tasks
-app.get('/tasks', ensureAuthenticated, tasks.findUserTasks);
-// Find task by id
-app.get('/tasks/:id', ensureAuthenticated, tasks.findById);
-//Add new task
-app.post('/tasks', ensureAuthenticated, tasks.addTask);
-// Update task
-app.patch('/tasks/:id', ensureAuthenticated, tasks.updateTask);
-//Delete task
-app.delete('/tasks/:id', ensureAuthenticated, tasks.deleteTask);
-//Tasks count
-app.get('/tasks/tasksCount', ensureAuthenticated, tasks.tasksCount);
-
+tasks(app);
 //Event area
-//Get list all user event
-app.get('/events', ensureAuthenticated, events.findUserEvents);
-// Find event by id
-app.get('/events/:id', ensureAuthenticated, events.findById);
-//Add new event
-app.post('/events', ensureAuthenticated, events.addEvent);
-// Update event
-app.patch('/events/:id', ensureAuthenticated, events.updateEvent);
-//Delete event
-app.delete('/events/:id', ensureAuthenticated, events.deleteEvent);
-//Tasks count
-app.get('/events/eventsCount', ensureAuthenticated, events.eventsCount);
+events(app);
 
 //Get full list
 app.get('/list', ensureAuthenticated, eventAndTasks.findEventAndTask);
@@ -118,12 +84,3 @@ app.get('/*', function (req, res) {
 app.listen(app.get('port'), function () {
     console.log("Server listening on port " + app.get('port'));
 });
-
-//TODO:Add full session support and hash with sold
-//Base chech for authentification
-function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect('/login')
-}
