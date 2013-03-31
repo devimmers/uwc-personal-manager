@@ -13,7 +13,8 @@ function(app, User, Note) {
       "": "index",
       "login": "index",
       "usernotes": "notes",
-      "usernotes/:id": "editNotes"
+      "usernotes/:id": "editNotes",
+      "logout": "logout"
     },
 
     initialize: function() {
@@ -24,11 +25,25 @@ function(app, User, Note) {
 
       _(this).extend(entity);
 
+      this.session = $.when(this.user.fetch());
     },
 
-    checkAuth: function() {
-      if (this.user.get("token") != "")
-        return true;
+
+    checkAuth: function(callback) {
+      var self = this;
+      this.session.done(function() {
+        if (self.user.get("token") != "")
+          return callback();
+        else
+          return self.navigate("/", {trigger: true});
+      });
+    },
+
+    preLoad: function(collection, callback) {
+      var self = this;
+      $.when(collection.fetch()).done(function() {
+        return callback();
+      });
     },
 
     index: function() {
@@ -40,28 +55,34 @@ function(app, User, Note) {
     },
 
     notes: function() {
-      if (this.checkAuth()) {
-        app.useLayout(main).setView(
-          new Note.Views.Layout({
-            collection: this.notes
-          })
-        ).render();
-        this.notes.fetch();
-      } else {
-        this.navigate("/", {trigger: true});
-      }
+      var self = this;
+      this.checkAuth(function(){
+        self.preLoad(self.notes, function() {
+          app.useLayout(main).setView(
+            new Note.Views.Layout({
+              collection: self.notes
+            })
+          ).render();
+        });
+      });
     },
 
     editNotes: function(id) {
-      if (this.checkAuth()) {
-        app.useLayout(main).setView(
-          new Note.Views.Edit({
-            model: this.notes.get(id)
-          })
-        ).render();
-      } else {
-        this.navigate("/", {trigger: true});
-      }
+      var self = this;
+      this.checkAuth(function() {
+        self.preLoad(self.notes, function() {
+          app.useLayout(main).setView(
+            new Note.Views.Edit({
+              model: self.notes.get(id)
+            })
+          ).render();
+        });
+      });
+    },
+
+    logout: function() {
+      this.user.destroy();
+      //this.navigate("/", {trigger: true});
     }
 
 

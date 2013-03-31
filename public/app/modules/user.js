@@ -18,30 +18,14 @@ function(app) {
       password: "", //String,
       token: ""
     },
-    url: "login",
-    // urlRoot: "/",
-    initialize:  function() {
+    url: "/login",
+    //urlRoot: "/",
+    initialize: function() {
       this.on("change", this.log);
-      this.fetch();
     },
 
     log: function() {
       app.log(this.toJSON());
-    },
-
-    login: function() {
-      var user = this;
-      $.ajax({
-        url: '/login',
-        type: 'POST',
-        data: user.toJSON(),
-        success: function(data, textStatus, xhr) {
-          user.set("token", data);
-        },
-        error: function(xhr, textStatus, errorThrown) {
-          app.log(xhr);
-        }
-      });
     }
   });
 
@@ -60,20 +44,12 @@ function(app) {
       "click #login": "login"
     },
 
-    initialize: function() {
-      this.listenTo(this.model, "change", this.render);
-    },
-
     login: function(e) {
       e.preventDefault();
-      this.model.set({
+      this.model.save({
         "email": this.$el.find("[name='email']").val(),
         "password": this.$el.find("[name='password']").val(),
       });
-      // this.model.save({success: function(resp) {
-      //   app.log(resp);
-      // }});
-      this.model.login();
     },
 
     serialize: function() {

@@ -15,33 +15,25 @@ function(app) {
     defaults:{
       title: "",//String,
       description: "",//String,
-      creationDate: "",
+      creationDate: "", //auto field
       href: ""
     },
     initialize: function(item) {
+      //if model haven't id, then save it to server
       if (this.isNew())
         this.save(item, {wait: true});
     },
-
+    //binding id for beter backbone intergation
     parse: function(resp) {
       resp.href = resp.id = resp._id;
       return resp;
-    }//,
-    // url: "/notes"
+    }
   });
 
   // Default Collection.
   Note.Collection = Backbone.Collection.extend({
     model: Note.Model,
-    url: "/notes",
-
-    parse: function(resp) {
-      _(resp).map( function( value, key, resp ) {
-        value.id = value._id;
-        return value;
-      });
-      return resp;
-    }
+    url: "/notes"
   });
 
   // Default View.
@@ -51,13 +43,13 @@ function(app) {
 
     events: {
       "click #send-note": "addNote"
-
     },
 
     initialize: function() {
       this.listenTo(this.collection, "add reset", this.render);
     },
 
+    //adding new note to collection
     addNote: function(e) {
       e.preventDefault();
 
@@ -67,7 +59,7 @@ function(app) {
       });
     },
 
-
+    //rendering item notes subview
     beforeRender: function() {
       this.collection.each(function(item) {
         this.insertView( new Note.Views.Item({
@@ -77,6 +69,7 @@ function(app) {
     }
   });
 
+  //teaser preview view of notes
   Note.Views.Item = Backbone.View.extend({
     template: "note/item",
     tagName: "li",
@@ -89,6 +82,7 @@ function(app) {
       this.listenTo(this.model, "change", this.render);
     },
 
+    //deleting model from collection and server + deleting view
     delNote: function(e) {
       e.preventDefault();
 
@@ -101,6 +95,7 @@ function(app) {
     }
   });
 
+  //full notes view with editing
   Note.Views.Edit = Backbone.View.extend({
     template: "note/edit",
     tagName: "form",
@@ -109,6 +104,10 @@ function(app) {
     events: {
       "click #update-note": "updateNote",
       "click .js-delete": "delNote"
+    },
+
+    initialize: function() {
+      this.listenTo(this.model, "change", this.render);
     },
 
     updateNote: function(e) {
@@ -120,6 +119,7 @@ function(app) {
       }, {patch: true, processData: true});
     },
 
+    //deleting model from collection and server + deleting view + redirect to view all notes
     delNote: function(e) {
       e.preventDefault();
 
