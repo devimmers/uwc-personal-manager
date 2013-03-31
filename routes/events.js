@@ -21,10 +21,9 @@ exports.addEvent = function(req, res) {
         if (err) {
             console.log("Error by saving event");
             res.send("Fail");
-            throw err;
         }
         console.log("Event was saved");
-        res.send("Succesed");
+        res.send({"_id":save_event._id});
     });
 };
 
@@ -42,14 +41,18 @@ exports.findById = function(req, res) {
 
 // Update event
 exports.updateEvent = function(req, res) {
-    var id = req.params.id;
     var event = req.body;
+    var id = req.params.id;
+    delete event._id;
     console.log('Update event: ' + JSON.stringify(event));
-    Event.update({_id:id}, event, {safe:true}, function(error, result) {
+    Event.update({_id:id}, event, {safe:true}, function(error, affected) {
         if (error) {
             console.log("Error by updating event");
         }
-        res.send(result);
+        if(affected === 0) {
+            res.send("Fail");
+        }
+        res.send("Success");
     });
 };
 

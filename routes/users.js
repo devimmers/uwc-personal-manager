@@ -1,9 +1,25 @@
-var User = require('../models/models.js').model;
+var User = require('../models/models.js').model,
+    passport = require('passport');
 
 //Logout action
 exports.logout = function(req, res) {
     req.logOut();
     res.redirect('/');
+};
+
+//Login action
+exports.login = function(req, res, next) {
+    passport.authenticate('local', function(err, user, info) {
+        if (err) { return next(err) }
+        if (!user) {
+            req.session.messages =  [info.message];
+            return res.send(req.session.messages);
+        }
+        req.logIn(user, function(err) {
+            if (err) { return next(err); }
+            return res.send(user.get('accessToken'));
+        });
+    })(req, res, next);
 };
 
 //Return user token

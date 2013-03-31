@@ -3,10 +3,14 @@ var mongoose = require('mongoose'),
 
 //User Schema, relationship:
 // User:Note -  1:M
+// User:Event -  1:M
+// User:Task -  1:M
 var userSchema = Schema({
     username: {type: String, required: false},
     password: {type: String, required: true},
     email: {type:String, required: true, unique: true},
+    sex: {type: String},
+    birthDate : {type: Date},
     creationDate: {type: Date, default: Date.now},
     accessToken: { type: String },
     notes: [{type: Schema.Types.ObjectId, ref: 'Note'}],
@@ -22,6 +26,7 @@ var noteSchema = Schema({
     creationDate: {type: Date, default: Date.now}
 });
 
+//Task Schema, M:1 to User
 var taskSchema = Schema({
     _user: {type: Schema.Types.ObjectId, ref: 'User'},
     title: String,
@@ -32,6 +37,7 @@ var taskSchema = Schema({
     state: Boolean   // Active or not
 });
 
+//Event Schema, M:1 to User
 var eventSchema = Schema({
     _user: {type: Schema.Types.ObjectId, ref: 'User'},
     title: String,
@@ -55,9 +61,8 @@ userSchema.methods.validPassword = function(password, done) {
 };
 
 userSchema.methods.generateRandomToken = function () {
-    var user = this,
-          chars = "_!abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
-          token = new Date().getTime() + '_';
+    var chars = "_!abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+        token = new Date().getTime() + '_';
     for ( var x = 0; x < 16; x++ ) {
         var i = Math.floor( Math.random() * 62 );
         token += chars.charAt( i );
@@ -72,9 +77,16 @@ var User =  mongoose.model('User', userSchema);
 
 //Add test user data to bd
 function testUserInit() {
-
     for(var i=0; i<5; i++) {
-        var testUser = new User({username:"Bob"+i, password:"123", email:"test" + i +"@mail.com"});
+        var testBithDate = new Date("October 1" + i +", 1975 11:13:00")
+
+        var testUser = new User({
+            username:"Bob"+i,
+            password:"123",
+            email:"test" + i +"@mail.com",
+            sex:"m",
+            birthDate: testBithDate
+        });
 
         testUser.save(function(err){
             if (err) {

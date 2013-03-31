@@ -42,19 +42,7 @@ app.configure(function () {
 passportConfig();
 
 // POST /login
-app.post('/login', function(req, res, next) {
-    passport.authenticate('local', function(err, user, info) {
-        if (err) { return next(err) }
-        if (!user) {
-            req.session.messages =  [info.message];
-            return res.send(req.session.messages);
-        }
-        req.logIn(user, function(err) {
-            if (err) { return next(err); }
-            return res.send(user.get('accessToken'));
-        });
-    })(req, res, next);
-});
+app.post('/login', users.login);
 
 //Get user token
 app.get('/login', users.getToken);
@@ -85,7 +73,7 @@ app.get('/tasks/:id', ensureAuthenticated, tasks.findById);
 //Add new task
 app.post('/tasks', ensureAuthenticated, tasks.addTask);
 // Update task
-app.put('/tasks/:id', ensureAuthenticated, tasks.updateTask);
+app.patch('/tasks/:id', ensureAuthenticated, tasks.updateTask);
 //Delete task
 app.delete('/tasks/:id', ensureAuthenticated, tasks.deleteTask);
 //Tasks count
@@ -99,7 +87,7 @@ app.get('/events/:id', ensureAuthenticated, events.findById);
 //Add new event
 app.post('/events', ensureAuthenticated, events.addEvent);
 // Update event
-app.put('/events/:id', ensureAuthenticated, events.updateEvent);
+app.patch('/events/:id', ensureAuthenticated, events.updateEvent);
 //Delete event
 app.delete('/events/:id', ensureAuthenticated, events.deleteEvent);
 //Tasks count

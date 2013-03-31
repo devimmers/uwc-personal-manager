@@ -6,26 +6,33 @@ User Actions:
 	
 	Login: 
 		Post with 2 parameters: 
-			username, password
+			email, password
 		Example:
 			http://localhost:3000/login
 		Post parameters:
-			username: Bob4
+			email: Bob4
 			password: 123
-		Responce:
-			...
-			redirect to main page(GET /main) - (onSucces action)
-			
+		Response:
+			return accessToken with format: {token:token}
+
+	Get token:
+	    Get without parameters:
+	        Get request to /login
+    	Example:
+	        http://localhost:3000/login
+        Response:
+            token in format {token:token}, or empty document - if user not authenticated
+
 	Registration:
 		Post with 3(first iteration 3, will be increase) parameters:
-			username, password, email
+			email, password, email
 		Example:
 			http://localhost:3000/registration
 		Post parameters:
 			username: NewUser
 			password: 123
 			email: test@gmail.com
-		Responce:
+		Response:
 			...
 			redirect to login page(GET /login) - (onSucces action)
 
@@ -33,7 +40,7 @@ User Actions:
 		Get without parameters
 		Example:
 			http://localhost:3000/login
-		Responce:
+		Response:
 			...
 			redirect to login page(GET /login) - (onSucces action)
 		
@@ -46,7 +53,7 @@ Notes Actions:
 		Get without parameters
 		Example:
 			http://localhost:3000/notes
-		Responce:
+		Response:
 			JSON with array of items:
 			    {
 					"_user": "5156d457cb25e29c35000005",
@@ -61,7 +68,7 @@ Notes Actions:
 			/notes/:id - id of Note
 		Example:
 			http://localhost:3000/notes/5156be0c57a63d8c0b000002
-		Responce:
+		Response:
 			JSON Document with Note:
 			    {
 					"_user": "5156d457cb25e29c35000005",
@@ -75,26 +82,27 @@ Notes Actions:
 		Post with parameters:
 			title, description
 		Example:
-			http://localhost:3000/addNote
-		Responce:
-			... will be soon, now only status	
+			http://localhost:3000/patch
+		Response:
+			return _id of added note in format: {"_id":_id}
+
 				
 	Edit note:
-		Put with parameters:
+		Patch with parameters:
 			/notes/:id - id of Note
-			and put parameters are note field:
+			and parameters are note field:
 				title, description
 		Example:
 			http://localhost:3000/notes/5156be0c57a63d8c0b000002
-		Responce:
-			... will be soon, now only status			
-				
+		Response:
+            status Success if all okey, Fail - if error
+
 	Delete note:
 		Delete with 1 parameter:
 			/notes/:id - id of Note
 		Example:
 			http://localhost:3000/notes/5156be0c57a63d8c0b000002
-		Responce:
+		Response:
 			... will be soon, now only status
 	
 	Get notes count:
@@ -102,7 +110,7 @@ Notes Actions:
 			/notesCount
 		Example:
 			http://localhost:3000/notesCount
-		Responce:
+		Response:
 			JSON document, with structure:
 				{ count: '5'}
 		
@@ -116,7 +124,7 @@ Tasks Actions:
 		Get without parameters
 		Example:
 			http://localhost:3000/tasks
-		Responce:
+		Response:
 			JSON with array of items:
 			     {
 					"_user": "51571332c455026c5f000005",
@@ -135,7 +143,7 @@ Tasks Actions:
 			/tasks/:id - id of Task
 		Example:
 			http://localhost:3000/tasks/5156be0c57a63d8c0b000002
-		Responce:
+		Response:
 			JSON Document with Task:
 			  {
 				"_user": "51571332c455026c5f000005",
@@ -153,26 +161,26 @@ Tasks Actions:
 		Post with parameters:
 			title, description, priority, state, taskDate
 		Example:
-			http://localhost:3000/addTask
-		Responce:
-			... will be soon, now only status	
-				
+			http://localhost:3000/tasks
+		Response:
+		    return _id of added task in format: {"_id":_id}
+
 	Edit task:
-		Put with parameters:
+		Patch with parameters:
 			/tasks/:id - id of Task
-			and put parameters are task field:
+			and parameters are task field:
 				title, description, priority, state, taskDate
 		Example:
 			http://localhost:3000/tasks/5156be0c57a63d8c0b000002
-		Responce:
-			... will be soon, now only status			
-				
+		Response:
+	        status Success if all okey, Fail - if error
+
 	Delete task:
 		Delete with 1 parameter:
 			/tasks/:id - id of Task
 		Example:
 			http://localhost:3000/tasks/5156be0c57a63d8c0b000002
-		Responce:
+		Response:
 			... will be soon, now only status
 			
 	Get tasks count:
@@ -180,21 +188,21 @@ Tasks Actions:
 			/tasksCount
 		Example:
 			http://localhost:3000/tasksCount
-		Responce:
+		Response:
 			JSON document, with structure:
 				{ count: '5'}
 			
 			
 -----------------------Events-------------------------------------------
 All events actions can done only when user in authenticated.
-User ñan see, add, remove, edit, delete, (in future - removeAll) Events;
+User can see, add, remove, edit, delete, (in future - removeAll) Events;
 Events Actions:
 	
 	Show all events:
 		Get without parameters
 		Example:
 			http://localhost:3000/events
-		Responce:
+		Response:
 		    {
 				"_user": "51571332c455026c5f000005",
 				"title": "Test Event5",
@@ -212,7 +220,7 @@ Events Actions:
 			/events/:id - id of Event
 		Example:
 			http://localhost:3000/events/5156be0c57a63d8c0b000002
-		Responce:
+		Response:
 			JSON Document with Event:
 		    {
 				"_user": "51571332c455026c5f000005",
@@ -231,25 +239,25 @@ Events Actions:
 			title, description, priority, state, eventDate
 		Example:
 			http://localhost:3000/addEvent
-		Responce:
-			... will be soon, now only status	
+		Response:
+		    return _id of added event in format: {"_id":_id}
 				
 	Edit event:
 		Put with parameters:
 			/events/:id - id of Event
-			and put parameters are event field:
+			and parameters are event field:
 				title, description, priority, state, eventDate
 		Example:
 			http://localhost:3000/events/5156be0c57a63d8c0b000002
-		Responce:
-			... will be soon, now only status			
+		Response:
+	        status Success if all okey, Fail - if error
 				
 	Delete event:
 		Delete with 1 parameter:
 			/events/:id - id of Event
 		Example:
 			http://localhost:3000/events/5156be0c57a63d8c0b000002
-		Responce:
+		Response:
 			... will be soon, now only status
 			
 	Get events count:
@@ -257,7 +265,7 @@ Events Actions:
 			/eventsCount
 		Example:
 			http://localhost:3000/eventsCount
-		Responce:
+		Response:
 			JSON document, with structure:
 				{ count: '5'}
 			
