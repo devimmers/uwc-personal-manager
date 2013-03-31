@@ -104,9 +104,10 @@ function(app) {
       e.preventDefault();
       var $text = this.$el.find(".ct-item");
 
-      this.model.save({
-        "text": $.trim($text.text())
-      }, {patch: true, processData: true});
+      if (this.model.get("text") != $.trim($text.text()))
+        this.model.save({
+          "text": $.trim($text.text())
+        }, {patch: true});
 
       $(".ct-item").removeAttr("contenteditable").removeClass("edit");
 
