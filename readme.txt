@@ -133,7 +133,7 @@ Tasks Actions:
 					"state": true,
 					"_id": "51571333c455026c5f000007",
 					"__v": 0,
-					"taskDate": "2013-03-30T16:30:43.314Z",
+					"creationDate": "2013-03-30T16:30:43.314Z",
 					"startDate": "2013-03-30T16:30:43.314Z"
 				}
 	
@@ -144,7 +144,7 @@ Tasks Actions:
 			http://localhost:3000/tasks/5156be0c57a63d8c0b000002
 		Response:
 			JSON Document with Task:
-			  {
+			{
 				"_user": "51571332c455026c5f000005",
 				"title": "Test task5",
 				"description": "Task description here",
@@ -152,7 +152,7 @@ Tasks Actions:
 				"state": true,
 				"_id": "51571333c455026c5f000007",
 				"__v": 0,
-				"taskDate": "2013-03-30T16:30:43.314Z",
+				"creationDate": "2013-03-30T16:30:43.314Z",
 				"startDate": "2013-03-30T16:30:43.314Z"
 			}
 
@@ -210,7 +210,7 @@ Events Actions:
 				"state": true,
 				"_id": "51571333c455026c5f000014",
 				"__v": 0,
-				"eventDate": "2013-03-30T16:30:43.322Z",
+				"creationDate": "2013-03-30T16:30:43.322Z",
 				"startDate": "2013-03-30T16:30:43.322Z"
 			}
 	
@@ -229,7 +229,7 @@ Events Actions:
 				"state": true,
 				"_id": "51571333c455026c5f000014",
 				"__v": 0,
-				"eventDate": "2013-03-30T16:30:43.322Z",
+				"creationDate": "2013-03-30T16:30:43.322Z",
 				"startDate": "2013-03-30T16:30:43.322Z"
 			}
 			
@@ -284,7 +284,7 @@ Return list of all event and task, for listview. And can add new item(event or t
 				"state": true,
 				"_id": "51571333c455026c5f000014",
 				"__v": 0,
-				"eventDate": "2013-03-30T16:30:43.322Z",
+				"creationDate": "2013-03-30T16:30:43.322Z",
 				"startDate": "2013-03-30T16:30:43.322Z"
 			}
 

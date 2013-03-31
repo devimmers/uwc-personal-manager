@@ -4,42 +4,54 @@ var User = require('../models/models.js').userModel,
 function users(app)  {
 
     //Login action
-    app.post('/enter', function(req, res, next) {
+    app.post('/enter', authentication);
+
+    function authentication (req, res, next) {
         passport.authenticate('local', function(err, user, info) {
             if (err) {
                 return next(err);
             }
-
-            if (!user) { // if not found user - check for error statuses
+            // if not found user - check for error statuses
+            if (!user) {
                 req.session.messages =  [info.message];
-                if(req.session.messages[0] === 'Unknown User' && req.body.status == 'new') { // if error status unknown and in body has status new - create new user
-                    var userBody = req.body;
-                    var newUser = new User(userBody);
-                    console.log('Add user: ' + JSON.stringify(newUser));
-                    newUser.save(function(err){
-                        if (err) {
-                            console.log("Error saved");
-                            res.send({"Status":"Error"});
-                        }
-                        console.log("Saved");
-                        req.login(newUser, function(err) { //auto login after registration
-                            if (err) {
-                                return req.send({"Status":"Error"});
-                            }
-                            return res.send({"token":newUser.get('accessToken')}); // return token after login
-                        });
-                    });
-                    (req, res, next);
-                } else { //If other error or don't have new parametr - return message
+                // if error status unknown and in body has status new - create new user
+                if(req.session.messages[0] === 'Unknown User' && req.body.status == 'new') {
+                    return registration(req,res,next);
+                //If other error or don't have new parameter - return message
+                } else {
                     return res.send(req.session.messages);
                 }
             }
             req.logIn(user, function(err) {
-                if (err) { return next(err); }
+                if (err) {
+                    return next(err);
+                }
                 return res.send({"token":user.get('accessToken')});
             });
         })(req, res, next);
-    });
+    }
+
+    //Registration function for login
+    function registration(req, res, next) {
+        var userBody = req.body;
+        var newUser = new User(userBody);
+        console.log('Add user: ' + JSON.stringify(newUser));
+        newUser.save(function(err){
+            if (err) {
+                console.log("Error saved");
+                res.send({"Status":"Error"});
+            }
+            console.log("Saved");
+            //auto login after registration
+            req.login(newUser, function(err) {
+                if (err) {
+                    return req.send({"Status":"Error"});
+                }
+                // return token after login
+                return res.send({"token":newUser.get('accessToken')});
+            });
+        });
+    }
 
     //Logout action
     app.delete('/enter', function(req, res) {
