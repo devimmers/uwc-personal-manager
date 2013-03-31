@@ -24,7 +24,11 @@ exports.addNote = function(req, res) {
             throw err;
         }
         console.log("Note was saved");
+<<<<<<< HEAD
         res.send({_id:save_note._id});
+=======
+        res.send({"_id":save_note._id});
+>>>>>>> 2407ca3b2257333993d2f9f8df59e65c80e8e24a
     });
 };
 
