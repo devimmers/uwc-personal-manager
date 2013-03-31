@@ -19,13 +19,9 @@ function(app) {
       token: ""
     },
     url: "/enter",
-    //urlRoot: "/",
-    initialize: function() {
-      this.on("change", this.log);
-    },
 
-    log: function() {
-      app.log(this.toJSON());
+    initialize: function() {
+      this.on("change:token destroy", function() {app.trigger("enter")});
     }
   });
 
@@ -59,9 +55,18 @@ function(app) {
     logout: function(e) {
       e.preventDefault();
 
-      this.model.set("id","");
+      this.model.set({
+        "id":"",
+        "token": ""
+      });
 
       this.model.destroy();
+
+      this.model.unset("id");
+
+      this.remove();
+
+      app.log(this.model);
     },
 
     serialize: function() {

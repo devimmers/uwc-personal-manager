@@ -26,6 +26,9 @@ function(app, User, Note) {
       _(this).extend(entity);
 
       this.session = $.when(this.user.fetch());
+
+      this.listenTo(app, "enter", function() {app.log("enter!");});
+      this.listenTo(app, "enter", this.index);
     },
 
 
@@ -57,13 +60,14 @@ function(app, User, Note) {
       ).render();
 
       this.session.done(function() {
+        app.log(self.user.get("token"));
         if (self.user.get("token") != ""){
           main.insertViews(
             [new Note.Views.Layout({
                 collection: self.notes
               })
             ]
-          );
+          ).render();
           self.notes.fetch();
         }
       });
