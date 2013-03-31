@@ -25,19 +25,13 @@ function(app) {
     }
   });
 
-  // // Default Collection.
-  // User.Collection = Backbone.Collection.extend({
-  //   model: User.Model
-  // });
-
   // Default View.
   User.Views.Login = Backbone.Layout.extend({
     template: "user/login",
 
     events: {
       "click #login": "login",
-      "click #logout": "logout",
-      "click #fb-login": "fb-login"
+      "click #logout": "logout"
     },
 
     initialize: function() {
@@ -72,26 +66,6 @@ function(app) {
 
     serialize: function() {
       return this.model.toJSON();
-    },
-
-    "fb-login": function(e) {
-      e.preventDefault();
-
-      $.ajax({
-        url: '/enter/facebook',
-        type: 'GET',
-        data: {},
-        complete: function(xhr, textStatus) {
-          //called when complete
-        },
-        success: function(data, textStatus, xhr) {
-          //called when successful
-        },
-        error: function(xhr, textStatus, errorThrown) {
-          //called when there is an error
-        }
-      });
-      
     }
 
   });

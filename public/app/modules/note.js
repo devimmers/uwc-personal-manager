@@ -106,7 +106,7 @@ function(app) {
       var $text = this.$el.find(".ct-item");
 
       this.model.save({
-        "text": $text.text()
+        "text": $.trim($text.text())
       }, {patch: true, processData: true});
 
       $text.removeAttr("contenteditable").removeClass("edit");
