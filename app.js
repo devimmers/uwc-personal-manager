@@ -42,19 +42,7 @@ app.configure(function () {
 passportConfig();
 
 // POST /login
-app.post('/login', function(req, res, next) {
-    passport.authenticate('local', function(err, user, info) {
-        if (err) { return next(err) }
-        if (!user) {
-            req.session.messages =  [info.message];
-            return res.send(req.session.messages);
-        }
-        req.logIn(user, function(err) {
-            if (err) { return next(err); }
-            return res.send(user.get('accessToken'));
-        });
-    })(req, res, next);
-});
+app.post('/login', users.login);
 
 //Get user token
 app.get('/login', users.getToken);
