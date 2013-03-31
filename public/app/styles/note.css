@@ -1,0 +1,37 @@
+.list {
+  list-style: none;
+  width: 400px;
+  text-align: center;
+}
+.list li {
+  display: inline-block;
+  width: 49%;
+}
+.note-item {
+  border: 3px solid #222;
+  padding: 20px;
+  position: relative;
+}
+.note-item .js-delete {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+.note-item .js-save {
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  display: none;
+}
+.note-item .ct-item {
+  width: 150px;
+  height: 150px;
+}
+.note-item .ct-item.edit {
+  border: 1px solid #f00;
+}
+.button {
+  display: inline-block;
+  border: none;
+  background: none;
+}
