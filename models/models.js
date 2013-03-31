@@ -58,7 +58,6 @@ var eventSchema = Schema({
     state: Boolean    //Active or not
 });
 
-
 //Simple valid password method
 userSchema.methods.validPassword = function (password, done) {
     if (this.password === password) {
@@ -69,7 +68,6 @@ userSchema.methods.validPassword = function (password, done) {
         });
     }
 };
-
 
 userSchema.methods.generateRandomToken = function () {
     var chars = "_!abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
