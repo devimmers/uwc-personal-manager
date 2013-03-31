@@ -12,15 +12,14 @@ function(app) {
 
   // Default Model.
   Note.Model = Backbone.Model.extend({
-    idAtrribute: "_id",
     defaults:{
       title: "",//String,
       description: "",//String,
       creationDate: ""
     },
-    initialize: function() {
+    initialize: function(item) {
       if (this.isNew())
-        this.save()
+        this.save(item, {wait: true});
     }//,
     // url: "/notes"
   });
@@ -80,6 +79,10 @@ function(app) {
       "click .js-delete": "delNote"
     },
 
+    initialize: function() {
+      this.listenTo(this.model, "change", this.render);
+    },
+
     delNote: function(e) {
       e.preventDefault();
 
@@ -108,7 +111,7 @@ function(app) {
       this.model.save({
         "title": this.$el.find("[name='title']").val(),
         "description": this.$el.find("[name='description']").val()
-      });
+      }, {patch: true});
     },
 
     delNote: function(e) {
