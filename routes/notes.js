@@ -42,14 +42,14 @@ exports.findById = function(req, res) {
 
 // Update note
 exports.updateNote = function(req, res) {
-    var id = req.params.id;
+   // var id = req.params.id;
     var note = req.body;
     console.log('Update note: ' + JSON.stringify(note));
-    Note.update({_id:id}, note, {safe:true}, function(error, result) {
+    Note.update({_id:note._id}, note, {safe:true}, function(error) {
         if (error) {
             console.log("Error update note");
         }
-        res.send(result);
+        res.send({status:"Succes"});
     });
 };
 

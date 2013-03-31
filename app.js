@@ -71,7 +71,7 @@ app.get('/notes/:id', ensureAuthenticated, notes.findById);
 //Add new note
 app.post('/notes', ensureAuthenticated, notes.addNote);
 // Update note
-app.put('/notes/:id', ensureAuthenticated, notes.updateNote);
+app.patch('/notes/:id', ensureAuthenticated, notes.updateNote);
 //Delete note
 app.delete('/notes/:id', ensureAuthenticated, notes.deleteNote);
 //Notes count
