@@ -4,13 +4,16 @@ var User = require('../models/models.js').userModel,
 //Logout action
 exports.logout = function(req, res) {
     req.logOut();
-    res.redirect('/');
+    res.send({'status':'Success'});
 };
 
 //Login action
 exports.login = function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
-        if (err) { return next(err) }
+        if (err) {
+            return next(err);
+        }
+
         if (!user) {
             req.session.messages =  [info.message];
             if(req.session.messages[0] === 'Unknown User' && req.body.status == 'new') {
@@ -51,7 +54,6 @@ exports.getToken = function(req, res) {
     }
     res.send({token:token});
 };
-
 
 // Add new user
 exports.register = function(req, res) {
