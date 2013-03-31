@@ -1,0 +1,30 @@
+body {
+  width: 100%;
+  *zoom: 1;
+}
+body:before,
+body:after {
+  content: "";
+  display: table;
+}
+body:after {
+  clear: both;
+}
+.main-block {
+  display: inline;
+  float: left;
+  overflow: hidden;
+  width: 64.58333333333334%;
+  margin: 0 1.0416666666666665%;
+  *width: 64.58333333333334% -correction;
+  *margin: 0 1.0416666666666665% -correction;
+}
+.aside {
+  display: inline;
+  float: left;
+  overflow: hidden;
+  width: 31.25%;
+  margin: 0 1.0416666666666665%;
+  *width: 31.25% -correction;
+  *margin: 0 1.0416666666666665% -correction;
+}

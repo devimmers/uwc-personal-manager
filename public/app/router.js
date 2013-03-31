@@ -2,10 +2,11 @@ define([
   // Application.
   "app",
   "modules/user",
-  "modules/note"
+  "modules/note",
+  "modules/list"
 ],
 
-function(app, User, Note) {
+function(app, User, Note, List) {
 
   // Defining the application router, you can attach sub routers here.
   var Router = Backbone.Router.extend({
@@ -20,7 +21,8 @@ function(app, User, Note) {
     initialize: function() {
       var entity = {
         user: new User.Model,
-        notes: new Note.Collection
+        notes: new Note.Collection,
+        list: new List.Collection
       };
 
       _(this).extend(entity);
@@ -96,12 +98,16 @@ function(app, User, Note) {
         // app.log(self.user.get("token"));
         if (self.user.get("token") != ""){
           self.main.insertViews(
-            [new Note.Views.Layout({
+            [new List.Views.Layout({
+                collection: self.list
+              }),
+            new Note.Views.Layout({
                 collection: self.notes
               })
             ]
           ).render();
           self.notes.fetch();
+          self.list.fetch();
         }
       });
     },

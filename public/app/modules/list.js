@@ -1,4 +1,4 @@
-// Note module
+// List module
 define([
   // Application.
   "app"
@@ -8,15 +8,17 @@ define([
 function(app) {
 
   // Create a new module.
-  var Note = app.module();
+  var List = app.module();
 
   // Default Model.
-  Note.Model = Backbone.Model.extend({
+  List.Model = Backbone.Model.extend({
     defaults:{
-      title: "",//String,
-      description: "",//String,
-      creationDate: "", //auto field
-      href: ""
+        title: "",//String,
+        description: "",//String,
+        creationDate: "",//{type: Date, default: Date.now},
+        startDate: "",//{type: Date, default: Date.now},
+        priority: "",//Number,
+        state: ""//Boolean   // Active
     },
     initialize: function(item) {
       //if model haven't id, then save it to server
@@ -25,33 +27,33 @@ function(app) {
     },
     //binding id for better backbone integration
     parse: function(resp) {
-      resp.href = resp.id = resp._id;
+      resp.id = resp._id;
       return resp;
     }
   });
 
   // Default Collection.
-  Note.Collection = Backbone.Collection.extend({
-    model: Note.Model,
-    url: "/notes"
+  List.Collection = Backbone.Collection.extend({
+    model: List.Model,
+    url: "/list"
   });
 
   // Default View.
-  Note.Views.Layout = Backbone.Layout.extend({
-    template: "note/layout",
+  List.Views.Layout = Backbone.Layout.extend({
+    template: "list/layout",
     tagName: "div",
-    className: "aside",
+    className: "main-block",
 
     events: {
-      "click #send-note": "addNote"
+      "click #send-list": "add"
     },
 
     initialize: function() {
       this.listenTo(this.collection, "add reset", this.render);
     },
 
-    //adding new note to collection
-    addNote: function(e) {
+    //adding new list item to collection
+    add: function(e) {
       e.preventDefault();
 
       this.collection.add({
@@ -62,7 +64,7 @@ function(app) {
     //rendering item notes subview
     beforeRender: function() {
       this.collection.each(function(item) {
-        this.insertView("ul", new Note.Views.Item({
+        this.insertView("ul", new List.Views.Item({
           model: item
         }));
       },this);
@@ -70,8 +72,8 @@ function(app) {
   });
 
   //teaser preview view of notes
-  Note.Views.Item = Backbone.View.extend({
-    template: "note/item",
+  List.Views.Item = Backbone.View.extend({
+    template: "list/item",
     tagName: "li",
 
     events: {
@@ -95,12 +97,12 @@ function(app) {
 
       $(document).on("click", function(evt) {
         if (evt.target !== e.target) {
-          self.update(evt);
+          _(self.update(evt)).throttle(1000);
         };
       });
     },
 
-    //update note changes
+    //update list changes
     update: function(e) {
       e.preventDefault();
       var $text = this.$el.find(".ct-item");
@@ -131,13 +133,13 @@ function(app) {
   });
 
   //full notes view with editing
-  Note.Views.Edit = Backbone.View.extend({
-    template: "note/edit",
+  List.Views.Edit = Backbone.View.extend({
+    template: "list/edit",
     tagName: "form",
     className: "form-horizontal",
 
     events: {
-      "click #update-note": "updateNote",
+      "click #update-list": "updateNote",
       "click .js-delete": "delNote"
     },
 
@@ -169,6 +171,6 @@ function(app) {
   });
 
   // Return the module for AMD compliance.
-  return Note;
+  return List;
 
 });
