@@ -24,7 +24,7 @@ function(app) {
     },
 
     parse: function(resp) {
-      resp.href = resp._id;
+      resp.href = resp.id = resp._id;
       return resp;
     }//,
     // url: "/notes"
