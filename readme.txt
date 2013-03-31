@@ -27,7 +27,7 @@ User Actions:
 		Post with 3(first iteration 3, will be increase) parameters and status must be 'new':
 			email, password, status
 		Example:
-			http://localhost:3000/registration
+			http://localhost:3000/enter
 		Post parameters:
 			password: 123
 			email: test@gmail.com
@@ -38,7 +38,7 @@ User Actions:
 	Logout:
 		Delete without parameters
 		Example:
-			http://localhost:3000/delete
+			http://localhost:3000/enter
 		Response:
 			...
 			return JSON with status: {'status':'Success'}
