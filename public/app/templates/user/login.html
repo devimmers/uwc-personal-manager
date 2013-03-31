@@ -1,26 +1,31 @@
 <% if ((token) == "") { %>
-<div class="control-group">
-	<label for="email" class="control-label">Your email:</label>
-	<div class="controls">
-		<input type="email" name="email" id="email" value="test4@mail.com">
+<form action="/enter" class="modal login-form form-horizontal">
+	<div class="control-group">
+		<label for="email" class="control-label">Your email:</label>
+		<div class="controls">
+			<input type="email" name="email" id="email" value="test4@mail.com">
+		</div>
 	</div>
-</div>
-<div class="control-group">
-	<label for="password" class="control-label">password:</label>
-	<div class="controls">
-		<input type="password" name="password" id="password" value="123">
+	<div class="control-group">
+		<label for="password" class="control-label">password:</label>
+		<div class="controls">
+			<input type="password" name="password" id="password" value="123">
+		</div>
 	</div>
-</div>
-<div class="control-group">
-	<label for="status" class="control-label">New user</label>
-	<div class="controls">
-		<input type="checkbox" name="status" id="status" value="new">
+	<div class="control-group">
+		<label for="status" class="control-label">New user</label>
+		<div class="controls">
+			<input type="checkbox" name="status" id="status" value="new">
+		</div>
 	</div>
-</div>
-<div class="form-actions">
-	<button class="btn btn-primary" type="submit" id="login">Login</button>
-</div>
+	<div class="form-actions">
+		<button class="btn btn-primary" type="submit" id="login">Login</button>
+	</div>
+</form>
 <a href="/auth/facebook" class="btn">Login with Facebook</a>
 <% } else { %>
-<a href="/usernotes">usernotes</a>
+<header class="pull-right">
+	<a href="/usernotes">usernotes</a>
+	<button class="btn btn-warning" id="logout">Logout</button>
+</header>
 <% } %>

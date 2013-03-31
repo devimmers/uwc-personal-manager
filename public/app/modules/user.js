@@ -37,11 +37,10 @@ function(app) {
   // Default View.
   User.Views.Login = Backbone.Layout.extend({
     template: "user/login",
-    tagName: "form",
-    className: "modal login-form form-horizontal",
 
     events: {
-      "click #login": "login"
+      "click #login": "login",
+      "click #logout": "logout"
     },
 
     initialize: function() {
@@ -55,6 +54,14 @@ function(app) {
         "password": this.$el.find("[name='password']").val(),
         "status": this.$el.find("[name='status']:checked").val()
       });
+    },
+
+    logout: function(e) {
+      e.preventDefault();
+
+      this.model.set("id","");
+
+      this.model.destroy();
     },
 
     serialize: function() {

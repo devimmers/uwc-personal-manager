@@ -47,11 +47,26 @@ function(app, User, Note) {
     },
 
     index: function() {
-      app.useLayout(main).setView(
+      var self = this,
+          main = app.useLayout(main);
+
+      main.setView(
         new User.Views.Login({
           model: this.user
         })
       ).render();
+
+      this.session.done(function() {
+        if (self.user.get("token") != ""){
+          main.insertViews(
+            [new Note.Views.Layout({
+                collection: self.notes
+              })
+            ]
+          );
+          self.notes.fetch();
+        }
+      });
     },
 
     notes: function() {
