@@ -12,6 +12,7 @@ var config = require('./config').config,
     passport = require('passport'),
     mongoose = require('mongoose');
 
+//Open mongo connection
 mongoose.connect(config.mongo.adress);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -29,7 +30,7 @@ app.configure(function () {
     app.use(express.favicon());
     app.use(express.methodOverride());
     app.use(express.cookieParser('something simple this way walks'));
-    app.use(express.session());
+    app.use(express.session({secret: 'secret'}));
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(passport.initialize());
     app.use(passport.session());
