@@ -85,11 +85,19 @@ function(app) {
 
     //inline editing
     edit: function(e) {
-      var $edit = $(e.currentTarget);
+      var $edit = $(e.currentTarget),
+          self = this;
 
       $edit.attr("contenteditable", "true").addClass("edit");
 
       this.$el.find(".js-save").show();
+
+      $(document).on("click", function(evt) {
+        // app.log(evt.target === e.currentTarget);
+        if (evt.target !== e.currentTarget) {
+          self.update(evt);
+        };
+      });
     },
 
     //update note changes
@@ -104,6 +112,8 @@ function(app) {
       $text.removeAttr("contenteditable").removeClass("edit");
 
       this.$el.find(".js-save").hide();
+
+      $(document).off();
     },
 
     //deleting model from collection and server + deleting view
