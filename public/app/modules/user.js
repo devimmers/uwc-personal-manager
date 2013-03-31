@@ -74,8 +74,9 @@ function(app) {
       return this.model.toJSON();
     },
 
-    "fb-login": function() {
-      
+    "fb-login": function(e) {
+      e.preventDefault();
+
       $.ajax({
         url: '/enter/facebook',
         type: 'GET',
