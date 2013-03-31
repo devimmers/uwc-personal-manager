@@ -9,8 +9,8 @@ var userSchema = Schema({
     username: {type: String, required: false},
     firstName: {type: String},
     lastName: {type: String},
-    password: {type: String, required: true},
-    email: {type: String, required: true, unique: true},
+    password: {type: String},
+    email: {type: String, unique: true},
     sex: {type: String},
     birthDate: {type: Date},
     creationDate: {type: Date, default: Date.now},
@@ -70,24 +70,6 @@ userSchema.methods.validPassword = function (password, done) {
     }
 };
 
-userSchema.methods.findOrCreate = function (profile, facebookId, callback) {
-    User.findOne({ 'facebookId': facebookId }, function (err, user) {
-        if (user === null) {
-            var newUser = new User({
-                facebookId: facebookId,
-                provider: "facebook",
-                firstName:  profile.name.familyName,
-                lastName: profile.name.givenName,
-                sex: profile.gender
-            });
-            newUser.save(function (err) {
-                callback(newUser);
-            });
-        } else {
-            callback(user);
-        }
-    });
-};
 
 userSchema.methods.generateRandomToken = function () {
     var chars = "_!abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",

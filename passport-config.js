@@ -31,7 +31,26 @@ module.exports = function () {
         process.nextTick(function () {
             console.log(profile);
             console.log(accessToken);
-            User.findOrCreate(profile, profile.id, done);
+
+               User.findOne({ 'facebookId': profile.id }, function (err, user) {
+                    if (user === null) {
+                        var newUser = new User({
+                            facebookId: profile.id,
+                            provider: "facebook",
+                            firstName:  profile.name.familyName,
+                            lastName: profile.name.givenName,
+                            sex: profile.gender
+                        });
+                        newUser.save(function (err) {
+                            if(err) {
+                                console.log("Error saving user");
+                            }
+                            done(null, newUser);
+                        });
+                    } else {
+                        done(null, user);
+                    }
+                });
 
             return done(null, profile);
         });
