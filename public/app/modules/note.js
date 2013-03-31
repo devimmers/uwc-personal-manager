@@ -94,7 +94,7 @@ function(app) {
 
       $(document).on("click", function(evt) {
         if (evt.target !== e.target) {
-          self.update(evt);
+          _(self.update(evt)).throttle(1000);
         };
       });
     },
@@ -108,11 +108,11 @@ function(app) {
         "text": $.trim($text.text())
       }, {patch: true, processData: true});
 
-      $text.removeAttr("contenteditable").removeClass("edit");
+      $(".ct-item").removeAttr("contenteditable").removeClass("edit");
 
-      this.$el.find(".js-save").hide();
+      $(".js-save").hide();
 
-      $(document).off("click", "**");
+      $(document).off();
     },
 
     //deleting model from collection and server + deleting view
