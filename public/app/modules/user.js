@@ -53,6 +53,7 @@ function(app) {
       this.model.save({
         "email": this.$el.find("[name='email']").val(),
         "password": this.$el.find("[name='password']").val(),
+        "status": this.$el.find("[name='status']:checked").val()
       });
     },
 
