@@ -21,14 +21,9 @@ exports.addNote = function(req, res) {
         if (err) {
             console.log("Error by saving note");
             res.send("Fail");
-            throw err;
         }
         console.log("Note was saved");
-<<<<<<< HEAD
-        res.send({_id:save_note._id});
-=======
         res.send({"_id":save_note._id});
->>>>>>> 2407ca3b2257333993d2f9f8df59e65c80e8e24a
     });
 };
 
@@ -46,18 +41,19 @@ exports.findById = function(req, res) {
 
 // Update note
 exports.updateNote = function(req, res) {
-   // var id = req.params.id;
     var note = req.body;
     var id = req.params.id;
     delete note._id;
     console.log('Update note: ' + JSON.stringify(note));
-    Note.update({_id:id}, note, {safe:true}, function(error) {
+    Note.update({_id:id}, note, {safe:true}, function(error, affected) {
         if (error) {
             console.log("Error update note");
         }
-        res.send("Success")
+        if(affected === 0) {
+            res.send("Fail");
+        }
+        res.send("Success");
     });
-
 };
 
 //Delete note

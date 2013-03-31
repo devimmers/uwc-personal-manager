@@ -21,10 +21,9 @@ exports.addTask = function(req, res) {
         if (err) {
             console.log("Error by save task");
             res.send("Fail");
-            throw err;
         }
         console.log("Task was saved");
-        res.send("Succesed");
+        res.send({"_id":save_task._id});
     });
 };
 
@@ -42,14 +41,18 @@ exports.findById = function(req, res) {
 
 // Update task
 exports.updateTask = function(req, res) {
-    var id = req.params.id;
     var task = req.body;
+    var id = req.params.id;
+    delete task._id;
     console.log('Update task: ' + JSON.stringify(task));
-    Task.update({_id:id}, task, {safe:true}, function(error, result) {
+    Task.update({_id:id}, task, {safe:true}, function(error, affected) {
         if (error) {
             console.log("Error update task");
         }
-        res.send(result);
+        if(affected === 0) {
+            res.send("Fail");
+        }
+        res.send("Success");
     });
 };
 
