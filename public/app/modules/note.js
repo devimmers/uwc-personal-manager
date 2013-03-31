@@ -111,7 +111,7 @@ function(app) {
       this.model.save({
         "title": this.$el.find("[name='title']").val(),
         "description": this.$el.find("[name='description']").val()
-      }, {patch: true});
+      }, {patch: true, processData: true});
     },
 
     delNote: function(e) {

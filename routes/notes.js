@@ -44,7 +44,7 @@ exports.findById = function(req, res) {
 exports.updateNote = function(req, res) {
    // var id = req.params.id;
     var note = req.body;
-    var id = req.body._id;
+    var id = req.params.id;
     delete note._id;
     console.log('Update note: ' + JSON.stringify(note));
     Note.update({_id:id}, note, {safe:true}, function(error) {
