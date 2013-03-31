@@ -7,7 +7,7 @@ var config = require('./config').config,
     notes = require('./routes/notes'),
     tasks = require('./routes/tasks'),
     events = require('./routes/events'),
-    eventAndTasks = require('./routes/event-and-task'),
+    list = require('./routes/event-and-task'),
     passportConfig = require("./passport-config"),
     passport = require('passport'),
     ensureAuthenticated = require('./lib/utils').ensureAuthenticated,
@@ -70,11 +70,8 @@ notes(app);
 tasks(app);
 //Event area
 events(app);
-
-//Get full list
-app.get('/list', ensureAuthenticated, eventAndTasks.findEventAndTask);
-//Add new event
-app.post('/list', ensureAuthenticated, eventAndTasks.addItem);
+//List area
+list(app);
 
 app.get('/*', function (req, res) {
     res.render('index.html');
