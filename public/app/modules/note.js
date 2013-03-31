@@ -39,7 +39,7 @@ function(app) {
   // Default View.
   Note.Views.Layout = Backbone.Layout.extend({
     template: "note/layout",
-    tagName: "ul",
+    tagName: "div",
 
     events: {
       "click #send-note": "addNote"
@@ -54,15 +54,14 @@ function(app) {
       e.preventDefault();
 
       this.collection.add({
-        "title": this.$el.find("[name='title']").val(),
-        "description": this.$el.find("[name='description']").val()
+        "text": this.$el.find("[name='text']").val(),
       });
     },
 
     //rendering item notes subview
     beforeRender: function() {
       this.collection.each(function(item) {
-        this.insertView( new Note.Views.Item({
+        this.insertView("ul", new Note.Views.Item({
           model: item
         }));
       },this);
@@ -75,15 +74,40 @@ function(app) {
     tagName: "li",
 
     events: {
-      "click .js-delete": "delNote"
+      "click .js-delete": "delete",
+      "click .js-save": "update",
+      "click .ct-item": "edit"
     },
 
     initialize: function() {
       this.listenTo(this.model, "change", this.render);
     },
 
+    //inline editing
+    edit: function(e) {
+      var $edit = $(e.currentTarget);
+
+      $edit.attr("contenteditable", "true").addClass("edit");
+
+      this.$el.find(".js-save").show();
+    },
+
+    //update note changes
+    update: function(e) {
+      e.preventDefault();
+      var $text = this.$el.find(".ct-item");
+
+      this.model.save({
+        "text": $text.text()
+      }, {patch: true, processData: true});
+
+      $text.removeAttr("contenteditable").removeClass("edit");
+
+      this.$el.find(".js-save").hide();
+    },
+
     //deleting model from collection and server + deleting view
-    delNote: function(e) {
+    delete: function(e) {
       e.preventDefault();
 
       this.model.destroy();
@@ -114,8 +138,7 @@ function(app) {
       e.preventDefault();
 
       this.model.save({
-        "title": this.$el.find("[name='title']").val(),
-        "description": this.$el.find("[name='description']").val()
+        "text": this.$el.find("[name='text']").val()
       }, {patch: true, processData: true});
     },
 
@@ -126,7 +149,7 @@ function(app) {
       this.model.destroy();
       this.remove();
 
-      app.router.navigate("/usernotes", {trigger: true});
+      app.router.navigate("/main", {trigger: true});
     },
 
     serialize: function() {

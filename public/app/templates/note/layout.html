@@ -1,18 +1,13 @@
 <a href="/" class="btn btn-info" id="back-to-home">Back</a>
 <form action="/notes" class="form-horizontal">
 	<div class="control-group">
-		<label for="title" class="control-label">Note title:</label>
+		<label for="text" class="control-label">Note text:</label>
 		<div class="controls">
-			<input type="text" name="title" id="title">
-		</div>
-	</div>
-	<div class="control-group">
-		<label for="description" class="control-label">Note description:</label>
-		<div class="controls">
-			<textarea row="3" name="description" id="description"></textarea>
+			<textarea row="3" name="text" id="text"></textarea>
 		</div>
 	</div>
 	<div class="form-actions">
 		<button class="btn btn-primary" type="submit" id="send-note">Send note</button>
 	</div>
 </form>
+<ul class="list"></ul>
