@@ -31,6 +31,8 @@ module.exports = function () {
         process.nextTick(function () {
             console.log(profile);
             console.log(accessToken);
+            User.findOrCreate(profile, profile.id, done);
+
             return done(null, profile);
         });
     }));

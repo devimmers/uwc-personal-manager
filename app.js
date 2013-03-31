@@ -33,8 +33,8 @@ app.configure(function () {
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(passport.initialize());
     app.use(passport.session());
-    app.engine('html', require('ejs').__express);
-    app.set('views', __dirname + '/public');
+   // app.engine('html', require('ejs').__express);
+  //  app.set('views', __dirname + '/public');
     app.use(app.router);
     app.use(express.static(path.join(__dirname, 'public')));
 });
@@ -42,6 +42,7 @@ app.configure(function () {
 app.configure('development', function(){
     app.use(express.errorHandler());
 });
+
 //Passport settings
 passportConfig();
 
