@@ -10,7 +10,6 @@ var config = require('./config').config,
     list = require('./routes/event-and-task'),
     passportConfig = require("./passport-config"),
     passport = require('passport'),
-    ensureAuthenticated = require('./lib/utils').ensureAuthenticated,
     mongoose = require('mongoose');
 
 mongoose.connect(config.mongo.adress);
@@ -47,30 +46,26 @@ app.configure('development', function () {
 //Passport settings
 passportConfig();
 
+//Facebook login
 app.get('/enter/facebook', passport.authenticate('facebook'),
-    function (req, res) {
-    });
-
+    function (req, res) {}
+);
+//Facebook callback settings
 app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }),
     function (req, res) {
         res.redirect('/');
-    });
+    }
+);
 
-
-// POST login or registration method
-app.post('/enter', users.login);
-//Get user token
-app.get('/enter', users.getToken);
-//Get logout action
-app.delete('/enter', users.logout);
-
+//Users login/logout actions
+users(app);
 //Notes routes settings
 notes(app);
-//Task area
+//Task routes settings
 tasks(app);
-//Event area
+//Event routes settings
 events(app);
-//List area
+//List routes settings
 list(app);
 
 app.get('/*', function (req, res) {
