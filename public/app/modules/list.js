@@ -44,17 +44,29 @@ function(app) {
   List.Collection = Backbone.Collection.extend({
     model: List.Model,
     url: "/list",
-    sort_key: 'id',
 
     initialize: function() {
     },
-    comparator: function(a) {
-      return -a.get(this.sort_key);
+    comparator: function(ab) {
+          if(this._order_by == 'startDate')
+              return ab.get('startDate');
+          else if(this._order_by == 'priority')
+              return -ab.get('priority');
+          else
+              return this._order_by == 'startDate'
+                  ? ab.get('startDate')
+                  : -ab.get('priority');
+      },
+    order_by_date: function() {
+          this._order_by = 'startDate';
+          this.sort();
     },
-    sortByField: function(fieldName) {
-      this.sort_key = fieldName;
-      this.sort();
-    }
+    order_by_priority: function() {
+          this._order_by = 'priority';
+          this.sort();
+    },
+
+      _order_by: 'startDate'
 
   });
 
@@ -91,13 +103,13 @@ function(app) {
 
     dataSort: function(e) {
         e.preventDefault();
-        this.collection.sortByField("creationDate")
+        this.collection.order_by_date();
         this.render();
     },
 
     prioritySort: function(e) {
         e.preventDefault();
-        this.collection.sortByField("priority");
+        this.collection.order_by_priority();
         this.render();
     },
 
