@@ -1,12 +1,24 @@
 <div class="list-item">
-       <%= type %>-
-       <%= title %>
-       <%= description %>
-<!--        <%= creationDate %>
-       <%= startDate %> -->
-       <%= priority %>
-       <%= state %>
-	
-<button class="button js-delete">x</button>
-<button class="button js-save">Save</button>
+    <div class="type">
+        <%= type %>
+    </div>
+    <div class="priority">
+        <%= priority %>
+    </div>
+    <div class="title">
+        <%= title %>
+    </div>
+
+
+
+    <!--        <%= creationDate %>
+           <%= startDate %> -->
+    <div class="buttons">
+        <button class="button js-delete">x</button>
+        <button class="button js-edit">Save</button>
+    </div>
+
+    <div class="description">
+        <%= description %>
+    </div>
 </div>

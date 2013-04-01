@@ -44,7 +44,7 @@ function tasks(app) {
 
 
     // Update task
-    app.patch('/tasks/:id', ensureAuthenticated, function(req, res) {
+    app.patch('/list/task/:id', ensureAuthenticated, function(req, res) {
         var task = req.body;
         var id = req.params.id;
         delete task._id;
