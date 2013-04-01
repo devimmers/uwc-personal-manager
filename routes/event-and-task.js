@@ -71,6 +71,36 @@ function list(app) {
         }
     });
 
+    //Add task or event
+    app.delete('/list/:id', ensureAuthenticated, function (req, res) {
+        var item = req.body;
+        item._user = req.user._id;
+        if (item.type == 'event') {
+            delete item.type;
+            var id = req.params.id;
+            console.log('Delete event by id: ' + id);
+            Event.remove({_id:id}, function(error) {
+                if (error) {
+                    res.send("Error by delete event");
+                }
+                console.log("Event was Deleted");
+                res.send("Succesed");
+            });
+
+        } else if (item.type == 'task') {
+            delete item.type;
+            var id = req.params.id;
+            console.log('Delete task by id: ' + id);
+            Task.remove({_id:id}, function(error) {
+                if (error) {
+                    res.send("Fail delete task");
+                }
+                console.log("Task was deleted");
+                res.send("Succesed");
+            });
+        }
+    });
+
 
 }
 
