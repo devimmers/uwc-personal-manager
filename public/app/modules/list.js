@@ -124,7 +124,7 @@ function(app) {
     delete: function(e) {
       e.preventDefault();
 
-      this.model.destroy({data: this.model.get("type")});
+      this.model.destroy({data: {"type": this.model.get("type")}});
       this.remove();
     },
 
