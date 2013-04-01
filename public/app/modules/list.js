@@ -46,7 +46,7 @@ function(app) {
     className: "main-block",
 
     events: {
-      "click #send-list": "add"
+      "click #send-item": "add"
     },
 
     initialize: function() {
@@ -58,7 +58,10 @@ function(app) {
       e.preventDefault();
 
       this.collection.add({
-        "text": this.$el.find("[name='text']").val(),
+        "title": this.$el.find("[name='title']").val(),
+        "description": this.$el.find("[name='description']").val(),
+        "priority": this.$el.find("[name='priority']").val(),
+        "type": this.$el.find("[name='type']:checked").val()
       });
     },
 
@@ -98,7 +101,7 @@ function(app) {
 
       $(document).on("click", function(evt) {
         if (evt.target !== e.target) {
-          _(self.update(evt)).throttle(1000);
+          self.update(evt);
         };
       });
     },
@@ -124,7 +127,7 @@ function(app) {
     delete: function(e) {
       e.preventDefault();
 
-      this.model.destroy({data: {"type": this.model.get("type")}});
+      this.model.destroy();
       this.remove();
     },
 
