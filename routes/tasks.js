@@ -27,7 +27,7 @@ function tasks(app) {
     });
 
     // Add new Task
-    app.post('/tasks', ensureAuthenticated, function(req, res) {
+    app.post('/list/task', ensureAuthenticated, function(req, res) {
         var task = req.body;
         task._user = req.user._id;
         var save_task = new Task(task);
