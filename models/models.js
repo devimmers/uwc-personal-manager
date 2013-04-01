@@ -6,17 +6,17 @@ var mongoose = require('mongoose'),
 // User:Event -  1:M
 // User:Task -  1:M
 var userSchema = Schema({
-    username: {type: String, required: false},
-    firstName: {type: String},
-    lastName: {type: String},
-    password: {type: String},
-    email: {type: String, unique: true},
-    sex: {type: String},
-    birthDate: {type: Date},
-    creationDate: {type: Date, default: Date.now},
-    accessToken: { type: String },
-    facebookId: {type: String},
-    provider: {type: String},
+    username:       {type: String, required: false},
+    firstName:      {type: String},
+    lastName:       {type: String},
+    password:       {type: String},
+    email:          {type: String, unique: true},
+    sex:            {type: String},
+    birthDate:      {type: Date},
+    creationDate:   {type: Date, default: Date.now},
+    accessToken:    {type: String },
+    facebookId:     {type: String},
+    provider:       {type: String},
     notes: [
         {type: Schema.Types.ObjectId, ref: 'Note'}
     ],
@@ -30,32 +30,32 @@ var userSchema = Schema({
 
 //Note Schema, M:1 to User
 var noteSchema = Schema({
-    _user: { type: Schema.Types.ObjectId, ref: 'User' },
-    text: String,
-    updateDate: {type: Date},
-    creationDate: {type: Date, default: Date.now}
+    _user:          {type: Schema.Types.ObjectId, ref: 'User' },
+    text:           {type: String},
+    updateDate:     {type: Date},
+    creationDate:   {type: Date, default: Date.now}
 });
 
 //Task Schema, M:1 to User
 var taskSchema = Schema({
-    _user: {type: Schema.Types.ObjectId, ref: 'User'},
-    title: String,
-    description: String,
-    creationDate: {type: Date, default: Date.now},
-    startDate: {type: Date, default: Date.now},
-    priority: {type: Number, default: 5},
-    state: Boolean   // Active or not
+    _user:          {type: Schema.Types.ObjectId, ref: 'User'},
+    title:          {type: String},
+    description:    {type: String},
+    creationDate:   {type: Date, default: Date.now},
+    startDate:      {type: Date, default: Date.now},
+    priority:       {type: Number, default: 5},
+    state:          {type: Boolean}   // Active or not
 });
 
 //Event Schema, M:1 to User
 var eventSchema = Schema({
-    _user: {type: Schema.Types.ObjectId, ref: 'User'},
-    title: String,
-    description: String,
-    creationDate: {type: Date, default: Date.now},
-    startDate: {type: Date, default: Date.now},
-    priority: {type: Number, default: 5},
-    state: Boolean    //Active or not
+    _user:          {type: Schema.Types.ObjectId, ref: 'User'},
+    title:          {type: String},
+    description:    {type: String},
+    creationDate:   {type: Date, default: Date.now},
+    startDate:      {type: Date, default: Date.now},
+    priority:       {type: Number, default: 5},
+    state:          {type: Boolean}    //Active or not
 });
 
 //Simple valid password method

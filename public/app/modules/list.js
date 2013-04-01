@@ -43,17 +43,33 @@ function(app) {
   // Default Collection.
   List.Collection = Backbone.Collection.extend({
     model: List.Model,
-    url: "/list"
+    url: "/list",
+    sort_key: 'id',
+
+    initialize: function() {
+    },
+    comparator: function(a) {
+      return -a.get(this.sort_key);
+    },
+    sortByField: function(fieldName) {
+      this.sort_key = fieldName;
+      this.sort();
+    }
+
   });
+
+
 
   // Default View.
   List.Views.Layout = Backbone.Layout.extend({
-    template: "list/layout",
-    tagName: "div",
-    className: "main-block",
+    template:   "list/layout",
+    tagName:    "div",
+    className:  "main-block",
 
     events: {
-      "click #send-item": "add"
+      "click #send-item":       "add",
+      "click #data-sort":       "dataSort",
+      "click #priority-sort":   "prioritySort"
     },
 
     initialize: function() {
@@ -71,6 +87,18 @@ function(app) {
         "type": this.$el.find("[name='type']:checked").val(),
         "state": this.$el.find("[name='state']").is(":checked")
       });
+    },
+
+    dataSort: function(e) {
+        e.preventDefault();
+        this.collection.sortByField("creationDate")
+        this.render();
+    },
+
+    prioritySort: function(e) {
+        e.preventDefault();
+        this.collection.sortByField("priority");
+        this.render();
     },
 
     //rendering item notes subview
