@@ -61,7 +61,7 @@ function tasks(app) {
     });
 
     //Delete task
-    app.delete('/tasks/:id', ensureAuthenticated, function(req, res) {
+    app.delete('/list/task/:id', ensureAuthenticated, function(req, res) {
         var id = req.params.id;
         console.log('Delete task by id: ' + id);
         Task.remove({_id:id}, function(error) {

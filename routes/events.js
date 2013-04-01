@@ -60,7 +60,7 @@ function events(app) {
     });
 
     //Delete event
-    app.delete('/events/:id', ensureAuthenticated, function(req, res) {
+    app.delete('/list/event/:id', ensureAuthenticated, function(req, res) {
         var id = req.params.id;
         console.log('Delete event by id: ' + id);
         Event.remove({_id:id}, function(error) {

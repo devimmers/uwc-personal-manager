@@ -132,7 +132,7 @@ function(app) {
     delete: function(e) {
       e.preventDefault();
 
-      this.model.destroy();
+      this.model.destroy(this.model.get("type"));
       this.remove();
     },
 
