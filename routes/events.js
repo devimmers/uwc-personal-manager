@@ -27,7 +27,7 @@ function events(app) {
     });
 
     // Add new event
-    app.post('/list/events', ensureAuthenticated, function(req, res) {
+    app.post('/list/event', ensureAuthenticated, function(req, res) {
         var event = req.body;
         event._user = req.user._id;
         var save_event = new Event(event);
