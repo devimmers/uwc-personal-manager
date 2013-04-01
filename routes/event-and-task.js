@@ -8,6 +8,12 @@ function list(app) {
     app.get('/list', ensureAuthenticated, function (req, res) {
         console.log('Find all user tasks and events');
         var result = new Array();
+        addEvents(req, result);
+        addTasks(req, res, result);
+    });
+
+    //add all events to list
+    function addEvents(req, result) {
         Event.find({_user: req.user._id}, function (error, data) {
             if (error) {
                 console.log("Error by finding all events");
@@ -17,7 +23,10 @@ function list(app) {
                 result.push(data[i]);
             }
         });
+    }
 
+    //Add all tasks to list
+    function addTasks(req, res, result) {
         Task.find({_user: req.user._id}, function (error, data) {
             if (error) {
                 console.log("Error by finding all events");
@@ -28,13 +37,13 @@ function list(app) {
             }
             res.send(result);
         });
-    });
+    }
 
     //Add task or event
     app.post('/list', ensureAuthenticated, function (req, res) {
         var item = req.body;
         item._user = req.user._id;
-        if(item.type == 'event') {
+        if (item.type == 'event') {
             delete item.type;
             var save_event = new Event(item);
             console.log('Add event: ' + JSON.stringify(item));
@@ -47,20 +56,22 @@ function list(app) {
                 res.send({"_id": save_event._id});
             });
 
-        } else if(item.type == 'task') {
+        } else if (item.type == 'task') {
             delete item.type;
             var save_task = new Task(item);
             console.log('Add task: ' + JSON.stringify(item));
-            save_task.save(function(err){
+            save_task.save(function (err) {
                 if (err) {
                     console.log("Error by save task");
                     res.send("Fail");
                 }
                 console.log("Task was saved");
-                res.send({"_id":save_task._id});
+                res.send({"_id": save_task._id});
             });
         }
     });
+
+
 }
 
 module.exports = list;
