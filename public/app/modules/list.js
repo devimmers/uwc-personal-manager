@@ -18,7 +18,8 @@ function(app) {
         creationDate: "",//{type: Date, default: Date.now},
         startDate: "",//{type: Date, default: Date.now},
         priority: "",//Number,
-        state: ""//Boolean   // Active
+        state: "",//Boolean   // Active
+        type: "" //Event or Task
     },
     initialize: function(item) {
       //if model haven't id, then save it to server
@@ -123,7 +124,7 @@ function(app) {
     delete: function(e) {
       e.preventDefault();
 
-      this.model.destroy();
+      this.model.destroy({data: this.model.get("type")});
       this.remove();
     },
 
