@@ -2022,6 +2022,11 @@ var jam = {
             "main": "./lodash.js"
         },
         {
+            "name": "moment",
+            "location": "../vendor/jam/moment",
+            "main": "moment.js"
+        },
+        {
             "name": "underscore",
             "location": "../vendor/jam/underscore",
             "main": "underscore.js"
@@ -2074,6 +2079,11 @@ if (typeof require !== "undefined" && require.config) {
             "main": "./lodash.js"
         },
         {
+            "name": "moment",
+            "location": "../vendor/jam/moment",
+            "main": "moment.js"
+        },
+        {
             "name": "underscore",
             "location": "../vendor/jam/underscore",
             "main": "underscore.js"
@@ -2123,6 +2133,11 @@ else {
             "name": "lodash",
             "location": "../vendor/jam/lodash",
             "main": "./lodash.js"
+        },
+        {
+            "name": "moment",
+            "location": "../vendor/jam/moment",
+            "main": "moment.js"
         },
         {
             "name": "underscore",
