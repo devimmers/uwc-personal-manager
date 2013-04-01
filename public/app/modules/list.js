@@ -65,8 +65,7 @@ function(app) {
           this._order_by = 'priority';
           this.sort();
     },
-
-      _order_by: 'startDate'
+    _order_by: 'startDate'
 
   });
 
@@ -103,12 +102,14 @@ function(app) {
 
     dataSort: function(e) {
         e.preventDefault();
+        this._order_by = "startDate";
         this.collection.order_by_date();
         this.render();
     },
 
     prioritySort: function(e) {
         e.preventDefault();
+        this._order_by = "priority";
         this.collection.order_by_priority();
         this.render();
     },
