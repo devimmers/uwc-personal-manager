@@ -43,7 +43,7 @@ function events(app) {
     });
 
     // Update event
-    app.patch('/events/:id', ensureAuthenticated, function(req, res) {
+    app.patch('/list/event/:id', ensureAuthenticated, function(req, res) {
         var event = req.body;
         var id = req.params.id;
         delete event._id;

@@ -1,5 +1,9 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
+/*
+var  bcrypt = require('bcrypt'),
+     SALT_WORK_FACTOR = 10;
+*/
 
 //User Schema, relationship:
 // User:Note -  1:M
@@ -57,6 +61,35 @@ var eventSchema = Schema({
     priority:       {type: Number, default: 5},
     state:          {type: Boolean}    //Active or not
 });
+
+/*
+// Bcrypt middleware
+userSchema.pre('save', function(next) {
+    var user = this;
+
+    if(!user.isModified('password')) return next();
+
+    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+        if(err) return next(err);
+
+        bcrypt.hash(user.password, salt, function(err, hash) {
+            if(err) return next(err);
+            user.password = hash;
+            next();
+        });
+    });
+});
+
+// Password verification
+userSchema.methods.validPassword = function(candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+        if(err) return cb(err);
+        cb(null, isMatch);
+    });
+};
+
+*/
+
 
 //Simple valid password method
 userSchema.methods.validPassword = function (password, done) {

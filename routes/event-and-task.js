@@ -39,40 +39,6 @@ function list(app) {
         });
     }
 
-    //Add task or event
-    app.post('/list', ensureAuthenticated, function (req, res) {
-        var item = req.body;
-        item._user = req.user._id;
-        if (item.type == 'event') {
-            delete item.type;
-            var save_event = new Event(item);
-            console.log('Add event: ' + JSON.stringify(item));
-            save_event.save(function (err) {
-                if (err) {
-                    console.log("Error by saving event");
-                    res.send("Fail");
-                }
-                console.log("Event was saved");
-                res.send({"_id": save_event._id});
-            });
-
-        } else if (item.type == 'task') {
-            delete item.type;
-            var save_task = new Task(item);
-            console.log('Add task: ' + JSON.stringify(item));
-            save_task.save(function (err) {
-                if (err) {
-                    console.log("Error by save task");
-                    res.send("Fail");
-                }
-                console.log("Task was saved");
-                res.send({"_id": save_task._id});
-            });
-        }
-    });
-
-
-
 }
 
 module.exports = list;
