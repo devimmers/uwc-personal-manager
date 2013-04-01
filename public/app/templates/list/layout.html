@@ -12,12 +12,24 @@
 		</div>
 	</div>
 	<div class="control-group">
-		<label for="priority" class="control-label">priority:</label>
+		<label for="priority" class="control-label">Priority:</label>
 		<div class="controls">
-			<input type="text" name="priority" id="priority">
-		</div>
-	</div>	
-	<label for="task-type" class="radio inline">
+            <select name="priority" id="priority">
+                <option value="5">Major</option>
+                <option value="4">Important</option>
+                <option value="3">Middle</option>
+                <option value="2">Minor</option>
+                <option value="1">Trivial</option>
+            </select>
+        </div>
+	</div>
+    <div class="control-group">
+        <label for="state" class="control-label">State:</label>
+        <div class="controls">
+            <input type="checkbox" name="state" id="state" checked>
+        </div>
+    </div>
+    <label for="task-type" class="radio inline">
 		<input type="radio" name="type" id="task-type" value="task" checked>
 		Task
 	</label>

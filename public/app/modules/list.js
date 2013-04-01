@@ -68,7 +68,8 @@ function(app) {
         "title": this.$el.find("[name='title']").val(),
         "description": this.$el.find("[name='description']").val(),
         "priority": this.$el.find("[name='priority']").val(),
-        "type": this.$el.find("[name='type']:checked").val()
+        "type": this.$el.find("[name='type']:checked").val(),
+        "state": this.$el.find("[name='state']").is(":checked")
       });
     },
 
