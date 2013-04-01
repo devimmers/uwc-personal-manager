@@ -75,7 +75,7 @@ function list(app) {
     app.delete('/list/:id', ensureAuthenticated, function (req, res) {
         var item = req.body;
         item._user = req.user._id;
-        if (item.type == 'event') {
+        if (item == 'event') {
             delete item.type;
             var id = req.params.id;
             console.log('Delete event by id: ' + id);
@@ -87,7 +87,7 @@ function list(app) {
                 res.send("Succesed");
             });
 
-        } else if (item.type == 'task') {
+        } else if (item == 'task') {
             delete item.type;
             var id = req.params.id;
             console.log('Delete task by id: ' + id);
