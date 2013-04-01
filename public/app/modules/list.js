@@ -24,7 +24,9 @@ function(app) {
 
     url: function() {
       var id = this.id || "";
-      return "/list/" + this.get("type") + "/" + id;
+      if (!_(id).isEmpty())
+        id = "/" + id;
+      return "/list/" + this.get("type") + id;
     },
     initialize: function(item) {
       //if model haven't id, then save it to server
