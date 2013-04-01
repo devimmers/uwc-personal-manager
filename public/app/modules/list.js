@@ -21,6 +21,11 @@ function(app) {
         state: "",//Boolean   // Active
         type: "" //Event or Task
     },
+
+    url: function() {
+      var id = this.id || "";
+      return "/list/" + this.get("type") + "/" + id;
+    },
     initialize: function(item) {
       //if model haven't id, then save it to server
       if (this.isNew())
