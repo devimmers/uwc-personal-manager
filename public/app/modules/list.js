@@ -28,9 +28,10 @@ function(app) {
         id = "/" + id;
       return "/list/" + this.get("type") + id;
     },
-    initialize: function(item) {
+    initialize: function(item, ops) {
       //if model haven't id, then save it to server
-      if (this.isNew())
+      app.log(this);
+      if (this.isNew() && !ops.wait)
         this.save(item, {wait: true});
     },
     //binding id for better backbone integration
@@ -91,8 +92,9 @@ function(app) {
       e.preventDefault();
 
       this.setView("#edit-item", new List.Views.Edit({
-        model: new List.Model
-      }));
+        model: new List.Model({},{"wait":true}),
+        collection: this.collection
+      })).render();
     },
 
     dataSort: function(e) {
@@ -177,13 +179,19 @@ function(app) {
 
       //app.log(this.model.toJSON());
 
-      this.model.save({
+      this.model.set({
         "title": this.$el.find("[name='title']").val(),
         "description": this.$el.find("[name='description']").val(),
         "priority": this.$el.find("[name='priority']").val(),
         "type": this.$el.find("[name='type']:checked").val(),
         "state": this.$el.find("[name='state']").is(":checked")
       }, {patch: true});
+
+      if (!_(this.collection).isUndefined())
+        this.collection.add(this.model);
+
+      app.log(this.model);
+      this.remove();
     },
 
     //deleting model from collection and server + deleting view + redirect to view all notes
