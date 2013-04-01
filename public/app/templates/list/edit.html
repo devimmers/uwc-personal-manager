@@ -1,0 +1,43 @@
+<form action="/list" class="form-horizontal">
+	<div class="control-group">
+		<label for="title" class="control-label">Item title:</label>
+		<div class="controls">
+			<input type="text" name="title" id="title" required value="<%= title %>">
+		</div>
+	</div>
+	<div class="control-group">
+		<label for="description" class="control-label">Item description:</label>
+		<div class="controls">
+			<textarea row="3" name="description" id="description"><%= description %></textarea>
+		</div>
+	</div>
+	<div class="control-group">
+		<label for="priority" class="control-label">Priority:</label>
+		<div class="controls">
+            <select name="priority" id="priority" value="<%= priority %>">
+                <option value="5">Major</option>
+                <option value="4">Important</option>
+                <option value="3">Middle</option>
+                <option value="2">Minor</option>
+                <option value="1">Trivial</option>
+            </select>
+        </div>
+	</div>
+    <div class="control-group">
+        <label for="state" class="control-label">State:</label>
+        <div class="controls">
+            <input type="checkbox" name="state" id="state" <% if (state){ %>checked<% } %>>
+        </div>
+    </div>
+    <label for="task-type" class="radio inline">
+		<input type="radio" name="type" id="task-type" value="task" <% if(type == "task"){ %>checked<% } %>>
+		Task
+	</label>
+	<label for="event-type" class="radio inline">
+		<input type="radio" name="type" id="event-type" value="event" <% if(type == "event"){ %>checked<% } %>>
+		Event
+	</label>
+	<div class="form-actions">
+		<button class="btn btn-primary" type="submit" id="send-item">Send item</button>
+	</div>
+</form>

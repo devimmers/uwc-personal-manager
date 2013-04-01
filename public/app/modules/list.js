@@ -17,9 +17,9 @@ function(app) {
         description: "",//String,
         creationDate: "",//{type: Date, default: Date.now},
         startDate: "",//{type: Date, default: Date.now},
-        priority: "",//Number,
-        state: "",//Boolean   // Active
-        type: "" //Event or Task
+        priority: "3",//Number,
+        state: "true",//Boolean   // Active
+        type: "event" //Event or Task
     },
 
     url: function() {
@@ -78,40 +78,35 @@ function(app) {
     className:  "main-block",
 
     events: {
-      "click #send-item":       "add",
+      "click #add-item":        "add",
       "click #data-sort":       "dataSort",
       "click #priority-sort":   "prioritySort"
     },
 
     initialize: function() {
-      this.listenTo(this.collection, "add reset", this.render);
+      this.listenTo(this.collection, "add reset sort", this.render);
     },
 
-    //adding new list item to collection
     add: function(e) {
       e.preventDefault();
 
-      this.collection.add({
-        "title": this.$el.find("[name='title']").val(),
-        "description": this.$el.find("[name='description']").val(),
-        "priority": this.$el.find("[name='priority']").val(),
-        "type": this.$el.find("[name='type']:checked").val(),
-        "state": this.$el.find("[name='state']").is(":checked")
-      });
+      this.setView("#edit-item", new List.Views.Edit({
+        model: new List.Model
+      }));
     },
 
     dataSort: function(e) {
         e.preventDefault();
         this._order_by = "startDate";
         this.collection.order_by_date();
-        this.render();
+        // this.render();
     },
 
     prioritySort: function(e) {
         e.preventDefault();
         this._order_by = "priority";
         this.collection.order_by_priority();
-        this.render();
+        // this.render();
     },
 
     //rendering item notes subview
@@ -131,8 +126,7 @@ function(app) {
 
     events: {
       "click .js-delete": "delete",
-      "click .js-save": "update",
-      "click .ct-item": "edit"
+      "click .js-edit": "edit"
     },
 
     initialize: function() {
@@ -148,35 +142,13 @@ function(app) {
 
       this.$el.find(".js-save").show();
 
-      $(document).on("click", function(evt) {
-        if (evt.target !== e.target) {
-          self.update(evt);
-        };
-      });
-    },
-
-    //update list changes
-    update: function(e) {
-      e.preventDefault();
-      var $text = this.$el.find(".ct-item");
-
-      if (this.model.get("text") != $.trim($text.text()))
-        this.model.save({
-          "text": $.trim($text.text())
-        }, {patch: true});
-
-      $(".ct-item").removeAttr("contenteditable").removeClass("edit");
-
-      $(".js-save").hide();
-
-      $(document).off();
     },
 
     //deleting model from collection and server + deleting view
     delete: function(e) {
       e.preventDefault();
 
-      this.model.destroy(this.model.get("type"));
+      this.model.destroy();
       this.remove();
     },
 
@@ -188,10 +160,9 @@ function(app) {
   //full notes view with editing
   List.Views.Edit = Backbone.View.extend({
     template: "list/edit",
-    tagName: "form",
-    className: "form-horizontal",
 
     events: {
+      "click #send-item":       "add",
       "click #update-list": "updateNote",
       "click .js-delete": "delNote"
     },
@@ -200,22 +171,28 @@ function(app) {
       this.listenTo(this.model, "change", this.render);
     },
 
-    updateNote: function(e) {
+    //adding new list item to collection
+    add: function(e) {
       e.preventDefault();
 
+      //app.log(this.model.toJSON());
+
       this.model.save({
-        "text": this.$el.find("[name='text']").val()
-      }, {patch: true, processData: true});
+        "title": this.$el.find("[name='title']").val(),
+        "description": this.$el.find("[name='description']").val(),
+        "priority": this.$el.find("[name='priority']").val(),
+        "type": this.$el.find("[name='type']:checked").val(),
+        "state": this.$el.find("[name='state']").is(":checked")
+      }, {patch: true});
     },
 
     //deleting model from collection and server + deleting view + redirect to view all notes
-    delNote: function(e) {
+    delete: function(e) {
       e.preventDefault();
 
       this.model.destroy();
       this.remove();
 
-      app.router.navigate("/main", {trigger: true});
     },
 
     serialize: function() {
