@@ -17,10 +17,11 @@ function list(app) {
         Event.find({_user: req.user._id}, function (error, data) {
             if (error) {
                 console.log("Error by finding all events");
-            }
-            for (var i = 0; i < data.length; ++i) {
-                data[i]._doc.type = "Event";
-                result.push(data[i]);
+            } else {
+                for (var i = 0; i < data.length; ++i) {
+                    data[i]._doc.type = "Event";
+                    result.push(data[i]);
+                }
             }
         });
     }
@@ -31,10 +32,11 @@ function list(app) {
             if (error) {
                 console.log("Error by finding all events");
                 res.send({"Status":"Error"});
-            }
-            for (var i = 0; i < data.length; ++i) {
-                data[i]._doc.type = "Task";
-                result.push(data[i]);
+            } else {
+                for (var i = 0; i < data.length; ++i) {
+                    data[i]._doc.type = "Task";
+                    result.push(data[i]);
+                }
             }
             res.send(result);
         });
