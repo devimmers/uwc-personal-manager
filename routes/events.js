@@ -34,6 +34,9 @@ function events(app) {
     app.post('/list/event', ensureAuthenticated, function(req, res) {
         var event = req.body;
         event._user = req.user._id;
+        if(event.startDate != null) {
+            event.startDate = new Date(event.startDate);
+        }
         var save_event = new Event(event);
         console.log('Add event: ' + JSON.stringify(event));
         save_event.save(function(err){
@@ -52,6 +55,9 @@ function events(app) {
         var event = req.body;
         var id = req.params.id;
         delete event._id;
+        if(event.startDate != null) {
+            event.startDate = new Date(event.startDate);
+        }
         console.log('Update event: ' + JSON.stringify(event));
         Event.update({_id:id}, event, {safe:true}, function(error, affected) {
             if (error) {
