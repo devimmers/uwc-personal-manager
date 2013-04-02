@@ -12,6 +12,8 @@
   border: 1px solid #222;
   padding: 20px;
   position: relative;
+  background-color: #DDDDDD;
+  border-radius: 4px;
 }
 .note-item .js-delete {
   position: absolute;
@@ -55,4 +57,10 @@
 
 .btn.js-save {
     margin-top: 5px;
+}
+
+@media (max-width: 480px) {
+  .note-list li{
+    width: 100%;
+  }
 }
