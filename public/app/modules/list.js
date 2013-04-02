@@ -30,7 +30,6 @@ function(app) {
     },
     initialize: function(item, ops) {
       //if model haven't id, then save it to server
-      app.log(this);
       if (this.isNew() && !ops.wait)
         this.save(item, {wait: true});
     },
@@ -137,12 +136,11 @@ function(app) {
 
     //inline editing
     edit: function(e) {
-      var $edit = $(e.currentTarget),
-          self = this;
+      e.preventDefault();
 
-      $edit.attr("contenteditable", "true").addClass("edit");
-
-      this.$el.find(".js-save").show();
+      app.useLayout(main).setView("#edit-item", new List.Views.Edit({
+        model: this.model
+      })).render();
 
     },
 
@@ -164,7 +162,8 @@ function(app) {
     template: "list/edit",
 
     events: {
-      "click #send-item":       "add",
+      "click #send-item":         "send",
+      "click #close-item-form":   "close",
       "click #update-list": "updateNote",
       "click .js-delete": "delNote"
     },
@@ -174,24 +173,33 @@ function(app) {
     },
 
     //adding new list item to collection
-    add: function(e) {
+    send: function(e) {
       e.preventDefault();
 
       //app.log(this.model.toJSON());
-
-      this.model.set({
+      var data = {
         "title": this.$el.find("[name='title']").val(),
         "description": this.$el.find("[name='description']").val(),
         "priority": this.$el.find("[name='priority']").val(),
         "type": this.$el.find("[name='type']:checked").val(),
         "state": this.$el.find("[name='state']").is(":checked")
-      }, {patch: true});
+      };
 
-      if (!_(this.collection).isUndefined())
+      if (_(data.type).isUndefined())
+        data.type = this.model.get("type");
+
+      if (!_(this.collection).isUndefined()){
+
+        this.model.set(data);
         this.collection.add(this.model);
 
-      app.log(this.model);
-      this.remove();
+      } else {
+
+        this.model.save(data, {patch: true});
+
+      }
+
+      this.close(e);
     },
 
     //deleting model from collection and server + deleting view + redirect to view all notes
@@ -203,8 +211,16 @@ function(app) {
 
     },
 
+    close: function(e) {
+      e.preventDefault();
+      var self = this;
+
+      this.$el.slideUp();
+      _(function() {self.remove()}).delay(1000);
+    },
+
     serialize: function() {
-      return this.model.toJSON();
+      return {model: this.model};
     }
   });
 
