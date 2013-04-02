@@ -34,6 +34,9 @@ function tasks(app) {
     app.post('/list/task', ensureAuthenticated, function(req, res) {
         var task = req.body;
         task._user = req.user._id;
+        if(task.startDate != null) {
+            task.startDate = new Date(task.startDate);
+        }
         var save_task = new Task(task);
         console.log('Add task: ' + JSON.stringify(task));
         save_task.save(function(err){
@@ -53,6 +56,9 @@ function tasks(app) {
         var task = req.body;
         var id = req.params.id;
         delete task._id;
+        if(task.startDate != null) {
+            task.startDate = new Date(task.startDate);
+        }
         console.log('Update task: ' + JSON.stringify(task));
         Task.update({_id:id}, task, {safe:true}, function(error, affected) {
             if (error) {
