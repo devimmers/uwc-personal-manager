@@ -6,12 +6,16 @@
     height: 80px;
     border: 3px solid #0040D0;
     text-align: center;
+    background: #777777;
+}
+
+.list-item.active {
+    background: #33FF33;
 }
 
 .title {
     display: inline-block;
     width: 75%;
-
     max-height: 30px;
     overflow: hidden;
 }
@@ -26,6 +30,20 @@
 .type {
     display: inline;
     float: left;
+    display: inline-block;
+    padding: 2px 4px;
+    font-size: 11.844px;
+    font-weight: bold;
+    line-height: 14px;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color: #f89406;;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    margin: 4px;
 }
 .priority {
     display: inline;
@@ -35,4 +53,9 @@
 .buttons {
     position: absolute;
     right: 5px;
+}
+
+.sorting-area {
+    text-align: right;
+    padding-bottom: 20px;
 }

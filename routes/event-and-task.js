@@ -19,7 +19,7 @@ function list(app) {
                 console.log("Error by finding all events");
             }
             for (var i = 0; i < data.length; ++i) {
-                data[i]._doc.type = "event";
+                data[i]._doc.type = "Event";
                 result.push(data[i]);
             }
         });
@@ -32,7 +32,7 @@ function list(app) {
                 console.log("Error by finding all events");
             }
             for (var i = 0; i < data.length; ++i) {
-                data[i]._doc.type = "task";
+                data[i]._doc.type = "Task";
                 result.push(data[i]);
             }
             res.send(result);

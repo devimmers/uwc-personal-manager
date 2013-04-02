@@ -1,25 +1,25 @@
-<div class="list-item">
+<div class="list-item <% if (model.state){ %>active<%} %>">
     <div class="type">
-        <%= type %>
+        <%= model.type %>
     </div>
     <div class="priority">
-        <%= priority %>
+        <%= priorityDoc[model.priority] %>
     </div>
     <div class="title">
-        <strong><%= title %></strong>
+        <strong><%= model.title %></strong>
     </div>
 
-    <!--        <%= creationDate %>
-    <%=startDate %>
+    <!--        <%= model.creationDate %>
+    <%= model.startDate %>
 
  -->
 
     <div class="buttons">
-        <button class="btn js-delete">x</button>
-        <button class="btn js-edit">Save</button>
+        <button class="btn js-delete">Del</button>
+        <button class="btn js-edit">Edit</button>
     </div>
 
     <div class="description">
-        <%= description %>
+        <%= model.description %>
     </div>
 </div>
