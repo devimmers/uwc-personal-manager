@@ -68,7 +68,7 @@ function notes(app) {
         console.log('Delete note by id: ' + id);
         Note.remove({_id:id}, function(error) {
             if (error) {
-                res.send("Fail delete note");
+                console.log("Fail delete note");
                 res.send({"Status":"Error"});
             }
             console.log("Note was deleted");
