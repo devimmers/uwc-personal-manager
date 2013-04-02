@@ -37,7 +37,6 @@ config.js:
     },
     mongo: {
         adress: 'mongodb://localhost/taskManager'
-       // adress: 'mongodb://lab01:projectlab01@web306.webfaction.com:30718/taskManager'
     },
     facebook: {
         id : '373345199447860',
