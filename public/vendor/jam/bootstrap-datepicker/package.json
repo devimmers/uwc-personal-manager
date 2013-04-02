@@ -1,0 +1,33 @@
+{
+    "name": "bootstrap-datepicker",
+    "description": "Datepicker for @twitter bootstrap forked from Stefan Petre's (of eyecon.ro), improvements by @eternicode",
+    "version": "2.1.1-jam.1",
+    "keywords": ["bootstrap", "css", "ui"],
+    "categories": ["UI"],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/eternicode/bootstrap-datepicker.git"
+    },
+    "licenses": [
+        {
+            "type": "Apache-2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0"
+        }
+    ],
+    "jam": {
+        "main": "js/bootstrap-datepicker.js",
+        "include": [
+            "less",
+            "js",
+            "LICENSE",
+            "README.md"
+        ],
+        "dependencies": {
+            "jquery": null
+        },
+        "shim": {
+            "exports": "jQuery",
+            "deps": ["jquery"]
+        }
+    }
+}

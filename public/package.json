@@ -16,7 +16,8 @@
       "jquery": "*",
       "lodash": "*",
       "backbone.layoutmanager": "*",
-      "moment": "*"
+      "moment": "*",
+      "bootstrap-datepicker": "*"
     }
   }
 }

@@ -2012,6 +2012,11 @@ var jam = {
             "main": "backbone.layoutmanager.js"
         },
         {
+            "name": "bootstrap-datepicker",
+            "location": "../vendor/jam/bootstrap-datepicker",
+            "main": "js/bootstrap-datepicker.js"
+        },
+        {
             "name": "jquery",
             "location": "../vendor/jam/jquery",
             "main": "dist/jquery.js"
@@ -2049,6 +2054,12 @@ var jam = {
             ],
             "exports": "Backbone.Layout"
         },
+        "bootstrap-datepicker": {
+            "exports": "jQuery",
+            "deps": [
+                "jquery"
+            ]
+        },
         "underscore": {
             "exports": "_"
         }
@@ -2067,6 +2078,11 @@ if (typeof require !== "undefined" && require.config) {
             "name": "backbone.layoutmanager",
             "location": "../vendor/jam/backbone.layoutmanager",
             "main": "backbone.layoutmanager.js"
+        },
+        {
+            "name": "bootstrap-datepicker",
+            "location": "../vendor/jam/bootstrap-datepicker",
+            "main": "js/bootstrap-datepicker.js"
         },
         {
             "name": "jquery",
@@ -2104,6 +2120,12 @@ if (typeof require !== "undefined" && require.config) {
                 "underscore"
             ],
             "exports": "Backbone.Layout"
+        },
+        "bootstrap-datepicker": {
+            "exports": "jQuery",
+            "deps": [
+                "jquery"
+            ]
         },
         "underscore": {
             "exports": "_"
@@ -2125,6 +2147,11 @@ else {
             "main": "backbone.layoutmanager.js"
         },
         {
+            "name": "bootstrap-datepicker",
+            "location": "../vendor/jam/bootstrap-datepicker",
+            "main": "js/bootstrap-datepicker.js"
+        },
+        {
             "name": "jquery",
             "location": "../vendor/jam/jquery",
             "main": "dist/jquery.js"
@@ -2160,6 +2187,12 @@ else {
                 "underscore"
             ],
             "exports": "Backbone.Layout"
+        },
+        "bootstrap-datepicker": {
+            "exports": "jQuery",
+            "deps": [
+                "jquery"
+            ]
         },
         "underscore": {
             "exports": "_"
