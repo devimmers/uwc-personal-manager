@@ -9,6 +9,7 @@ function notes(app) {
         Note.find({_user:req.user._id}, function(error, data){
             if (error) {
                 console.log("Error by finding notes");
+                res.send({"Status":"Error"});
             }
             res.send(data);
         });
@@ -23,7 +24,7 @@ function notes(app) {
         save_note.save(function(err){
             if (err) {
                 console.log("Error by saving note");
-                res.send("Fail");
+                res.send({"Status":"Error"});
             }
             console.log("Note was saved");
             res.send({"_id":save_note._id});
@@ -37,6 +38,7 @@ function notes(app) {
         Note.find({_id:id}, function(error, data){
             if(error) {
                 console.log("Error finding note by id :" + id);
+                res.send({"Status":"Error"});
             }
             res.send(data);
         });
@@ -51,11 +53,12 @@ function notes(app) {
         Note.update({_id:id}, note, {safe:true}, function(error, affected) {
             if (error) {
                 console.log("Error update note");
+                res.send({"Status":"Error"});
             }
             if(affected === 0) {
-                res.send("Fail");
+                res.send({"Status":"Error"});
             }
-            res.send("Success");
+            res.send({"Status":"Success"});
         });
     });
 
@@ -66,9 +69,10 @@ function notes(app) {
         Note.remove({_id:id}, function(error) {
             if (error) {
                 res.send("Fail delete note");
+                res.send({"Status":"Error"});
             }
             console.log("Note was deleted");
-            res.send("Succesed");
+            res.send({"Status":"Success"});
         });
     });
 
@@ -78,6 +82,7 @@ function notes(app) {
         Note.count({_user:req.user._id}, function(error, count){
             if (error) {
                 console.log("Error by counting notes");
+                res.send({"Status":"Error"});
             }
             res.send({count:count});
         });

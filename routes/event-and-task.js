@@ -30,6 +30,7 @@ function list(app) {
         Task.find({_user: req.user._id}, function (error, data) {
             if (error) {
                 console.log("Error by finding all events");
+                res.send({"Status":"Error"});
             }
             for (var i = 0; i < data.length; ++i) {
                 data[i]._doc.type = "Task";

@@ -9,6 +9,7 @@ function events(app) {
         Event.find({_user:req.user._id}, function(error, data){
             if (error) {
                 console.log("Error by finding all events");
+                res.send({"Status":"Error"});
             }
             res.send(data);
         });
@@ -21,6 +22,7 @@ function events(app) {
         Event.find({_id:id}, function(error, data){
             if(error) {
                 console.log("Error finding event by id :" + id);
+                res.send({"Status":"Error"});
             }
             res.send(data);
         });
@@ -35,7 +37,7 @@ function events(app) {
         save_event.save(function(err){
             if (err) {
                 console.log("Error by saving event");
-                res.send("Fail");
+                res.send({"Status":"Error"});
             }
             console.log("Event was saved");
             res.send({"_id":save_event._id});
@@ -51,11 +53,12 @@ function events(app) {
         Event.update({_id:id}, event, {safe:true}, function(error, affected) {
             if (error) {
                 console.log("Error by updating event");
+                res.send({"Status":"Error"});
             }
             if(affected === 0) {
-                res.send("Fail");
+                res.send({"Status":"Error"});
             }
-            res.send("Success");
+            res.send({"Status":"Success"});
         });
     });
 
@@ -65,10 +68,10 @@ function events(app) {
         console.log('Delete event by id: ' + id);
         Event.remove({_id:id}, function(error) {
             if (error) {
-                res.send("Error by delete event");
+                res.send({"Status":"Error"});
             }
             console.log("Event was Deleted");
-            res.send("Succesed");
+            res.send({"Status":"Success"});
         });
     });
 
@@ -78,6 +81,7 @@ function events(app) {
         Event.count({_user:req.user._id}, function(error, count){
             if (error) {
                 console.log("Error by counting events");
+                res.send({"Status":"Error"});
             }
             res.send({count:count});
         });

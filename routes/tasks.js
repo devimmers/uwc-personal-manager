@@ -9,6 +9,7 @@ function tasks(app) {
         Task.find({_user:req.user._id}, function(error, data){
             if (error) {
                 console.log("Error by finding all tasks");
+                res.send({"Status":"Error"});
             }
             res.send(data);
         });
@@ -21,6 +22,7 @@ function tasks(app) {
         Task.find({_id:id}, function(error, data){
             if(error) {
                 console.log("Error finding by id :" + id);
+                res.send({"Status":"Error"});
             }
             res.send(data);
         });
@@ -35,7 +37,7 @@ function tasks(app) {
         save_task.save(function(err){
             if (err) {
                 console.log("Error by save task");
-                res.send("Fail");
+                res.send({"Status":"Error"});
             }
             console.log("Task was saved");
             res.send({"_id":save_task._id});
@@ -52,11 +54,12 @@ function tasks(app) {
         Task.update({_id:id}, task, {safe:true}, function(error, affected) {
             if (error) {
                 console.log("Error update task");
+                res.send({"Status":"Error"});
             }
             if(affected === 0) {
-                res.send("Fail");
+                res.send({"Status":"Error"});
             }
-            res.send("Success");
+            res.send({"Status":"Success"});
         });
     });
 
@@ -67,9 +70,10 @@ function tasks(app) {
         Task.remove({_id:id}, function(error) {
             if (error) {
                 res.send("Fail delete task");
+                res.send({"Status":"Error"});
             }
             console.log("Task was deleted");
-            res.send("Succesed");
+            res.send({"Status":"Success"});
         });
     });
 
@@ -79,6 +83,7 @@ function tasks(app) {
         Task.count({_user:req.user._id}, function(error, count){
             if (error) {
                 console.log("Error by counting tasks");
+                res.send({"Status":"Error"});
             }
             res.send({count:count});
         });
