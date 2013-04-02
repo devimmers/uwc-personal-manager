@@ -54,3 +54,8 @@
     text-align: right;
     padding-bottom: 20px;
 }
+.start-date {
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+}
