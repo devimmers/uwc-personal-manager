@@ -38,6 +38,8 @@
     max-height: 150px;
     text-overflow: ellipsis;
     overflow: hidden;
+    width: 150px;
+    resize: none;
 }
 
 .button {
