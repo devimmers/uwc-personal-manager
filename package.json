@@ -7,8 +7,6 @@
         "express": "3.x",
         "jade": "*",
         "should": "*",
-        "mocha": "*",
-        "supertest": "*",
         "mongoose": "*",
         "passport": "*",
         "passport-local": "*",

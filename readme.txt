@@ -94,7 +94,7 @@ Notes Actions:
 		Example:
 			http://localhost:3000/notes/5156be0c57a63d8c0b000002
 		Response:
-            status Success if all okey, Fail - if error
+            status Success if all okey, Error - if error
 
 	Delete note:
 		Delete with 1 parameter:
@@ -158,27 +158,27 @@ Tasks Actions:
 
 	Add task:
 		Post with parameters:
-			title, description, priority, state, taskDate
+			title, description, priority, state, startDate
 		Example:
-			http://localhost:3000/tasks
+			http://localhost:3000/list/task
 		Response:
 		    return _id of added task in format: {"_id":_id}
 
 	Edit task:
 		Patch with parameters:
-			/tasks/:id - id of Task
+			/list/task/:id - id of Task
 			and parameters are task field:
-				title, description, priority, state, taskDate
+				title, description, priority, state, startDate
 		Example:
-			http://localhost:3000/tasks/5156be0c57a63d8c0b000002
+			http://localhost:3000//list/task/5156be0c57a63d8c0b000002
 		Response:
-	        status Success if all okey, Fail - if error
+	        status Success if all okey, Error - if error
 
 	Delete task:
 		Delete with 1 parameter:
-			/tasks/:id - id of Task
+			/list/task/:id - id of Task
 		Example:
-			http://localhost:3000/tasks/5156be0c57a63d8c0b000002
+			http://localhost:3000//list/task/5156be0c57a63d8c0b000002
 		Response:
 			... will be soon, now only status
 			
@@ -235,27 +235,27 @@ Events Actions:
 			
 	Add event:
 		Post with parameters:
-			title, description, priority, state, eventDate
+			title, description, priority, state, startDate
 		Example:
-			http://localhost:3000/addEvent
+			http://localhost:3000/list/event
 		Response:
 		    return _id of added event in format: {"_id":_id}
 				
 	Edit event:
-		Put with parameters:
-			/events/:id - id of Event
+		Patch with parameters:
+			/list/event/:id - id of Event
 			and parameters are event field:
-				title, description, priority, state, eventDate
+				title, description, priority, state, startDate
 		Example:
-			http://localhost:3000/events/5156be0c57a63d8c0b000002
+			http://localhost:3000/list/event/5156be0c57a63d8c0b000002
 		Response:
-	        status Success if all okey, Fail - if error
+	        status Success if all okey, Error - if error
 				
 	Delete event:
 		Delete with 1 parameter:
-			/events/:id - id of Event
+			/list/event/ - id of Event
 		Example:
-			http://localhost:3000/events/5156be0c57a63d8c0b000002
+			http://localhost:3000/list/event/5156be0c57a63d8c0b000002
 		Response:
 			... will be soon, now only status
 			
@@ -287,11 +287,3 @@ Return list of all event and task, for listview. And can add new item(event or t
 				"creationDate": "2013-03-30T16:30:43.322Z",
 				"startDate": "2013-03-30T16:30:43.322Z"
 			}
-
-		Add item:
-    		Post with parameters:
-    			title, description, priority, state, startDate, type
-    		Example:
-    			http://localhost:3000/list
-    		Response:
-    		    return _id of added event in format: {"_id":_id}
