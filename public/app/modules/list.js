@@ -33,6 +33,7 @@ define([
             },
             initialize: function (item, ops) {
                 //if model haven't id, then save it to server
+                app.log(item);
                 if (this.isNew() && !ops.wait)
                     this.save(item, {wait: true});
             },
@@ -200,14 +201,10 @@ define([
                     data.type = this.model.get("type");
 
                 if (!_(this.collection).isUndefined()) {
-
-                    this.model.set(data);
+                    this.model.save(data);
                     this.collection.add(this.model);
-
                 } else {
-
                     this.model.save(data, {patch: true});
-
                 }
 
                 this.close(e);
