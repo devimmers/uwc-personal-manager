@@ -2,6 +2,7 @@
   list-style: none;
   max-width: 400px;
   text-align: center;
+  margin-top: 60px;
 }
 .note-list li {
   display: inline-block;
@@ -17,8 +18,10 @@
 }
 .note-item .js-delete {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 3px;
+  right: 0;
+  border: none;
+  background: none;
 }
 .note-item .ct-item {
   width: 100%;
@@ -38,7 +41,7 @@
   border-radius: 4px;
 }
 .note-item .new.ct-item {
-    height: 120px;
+    height: 119px;
 }
 
 .ct-item {

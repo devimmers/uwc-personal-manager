@@ -54,7 +54,7 @@ function(app) {
       e.preventDefault();
 
       this.collection.add({
-        "text": $.trim(this.$el.find(".new").text())
+        "text": $.trim(this.$el.find("[name='text']").val())
       });
     },
 
@@ -88,7 +88,7 @@ function(app) {
       var $edit = $(e.currentTarget),
           self = this;
 
-      $edit.attr("contenteditable", "true").addClass("edit");
+      //$edit.attr("contenteditable", "true").addClass("edit");
 
       this.$el.find(".js-save").show();
 
@@ -104,12 +104,12 @@ function(app) {
       e.preventDefault();
       var $text = this.$el.find(".ct-item");
 
-      if (this.model.get("text") != $.trim($text.text()))
+      if (this.model.get("text") != $.trim(this.$el.find("[name='text']").val()))
         this.model.save({
-          "text": $.trim($text.text())
+          "text": $.trim(this.$el.find("[name='text']").val())
         }, {patch: true});
 
-      $(".ct-item").removeAttr("contenteditable").removeClass("edit");
+      //$(".ct-item").removeAttr("contenteditable").removeClass("edit");
 
       $(".js-save").hide();
 
