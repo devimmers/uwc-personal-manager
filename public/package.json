@@ -15,7 +15,8 @@
       "backbone": "*",
       "jquery": "*",
       "lodash": "*",
-      "backbone.layoutmanager": "*"
+      "backbone.layoutmanager": "*",
+      "moment": "*"
     }
   }
 }

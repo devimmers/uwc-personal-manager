@@ -1,7 +1,8 @@
 // List module
 define([
   // Application.
-  "app"
+  "app",
+  "moment"
 ],
 
 // Map dependencies from above array.
