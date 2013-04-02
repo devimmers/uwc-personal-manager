@@ -1,6 +1,6 @@
 .note-list {
   list-style: none;
-  width: 400px;
+  max-width: 400px;
   text-align: center;
 }
 .note-list li {
@@ -19,7 +19,12 @@
   right: 5px;
 }
 .note-item .ct-item {
-  width: 150px;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
   height: 150px;
 }
 .note-item .ct-item.edit {

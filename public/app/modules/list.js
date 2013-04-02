@@ -84,7 +84,7 @@ define([
         List.Views.Layout = Backbone.Layout.extend({
             template: "list/layout",
             tagName: "div",
-            className: "span9",
+            className: "span8",
 
             events: {
                 "click #add-item": "add",
