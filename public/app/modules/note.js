@@ -13,8 +13,7 @@ function(app) {
   // Default Model.
   Note.Model = Backbone.Model.extend({
     defaults:{
-      title: "",//String,
-      description: "",//String,
+      text: "",//String,
       creationDate: "", //auto field
       href: ""
     },
@@ -55,7 +54,7 @@ function(app) {
       e.preventDefault();
 
       this.collection.add({
-        "text": this.$el.find("[name='text']").val(),
+        "text": $.trim(this.$el.find(".new").text())
       });
     },
 
@@ -123,44 +122,6 @@ function(app) {
 
       this.model.destroy();
       this.remove();
-    },
-
-    serialize: function() {
-      return this.model.toJSON();
-    }
-  });
-
-  //full notes view with editing
-  Note.Views.Edit = Backbone.View.extend({
-    template: "note/edit",
-    tagName: "form",
-    className: "form-horizontal",
-
-    events: {
-      "click #update-note": "updateNote",
-      "click .js-delete": "delNote"
-    },
-
-    initialize: function() {
-      this.listenTo(this.model, "change", this.render);
-    },
-
-    updateNote: function(e) {
-      e.preventDefault();
-
-      this.model.save({
-        "text": this.$el.find("[name='text']").val()
-      }, {patch: true, processData: true});
-    },
-
-    //deleting model from collection and server + deleting view + redirect to view all notes
-    delNote: function(e) {
-      e.preventDefault();
-
-      this.model.destroy();
-      this.remove();
-
-      app.router.navigate("/main", {trigger: true});
     },
 
     serialize: function() {

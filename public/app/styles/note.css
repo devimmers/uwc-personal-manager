@@ -18,17 +18,14 @@
   top: 5px;
   right: 5px;
 }
-.note-item .js-save {
-  position: absolute;
-  left: 5px;
-  bottom: 5px;
-  display: none;
-}
 .note-item .ct-item {
   width: 150px;
   height: 150px;
 }
 .note-item .ct-item.edit {
+  border: 1px solid #f00;
+}
+.note-item .new {
   border: 1px solid #f00;
 }
 .button {
