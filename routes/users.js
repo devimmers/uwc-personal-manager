@@ -40,16 +40,17 @@ function users(app)  {
             if (err) {
                 console.log("Error saved");
                 res.send({"Status":"Error"});
+            } else {
+                console.log("Saved");
+                //auto login after registration
+                req.login(newUser, function(err) {
+                    if (err) {
+                        return req.send({"Status":"Error"});
+                    }
+                    // return token after login
+                    return res.send({"token":newUser.get('accessToken')});
+                });
             }
-            console.log("Saved");
-            //auto login after registration
-            req.login(newUser, function(err) {
-                if (err) {
-                    return req.send({"Status":"Error"});
-                }
-                // return token after login
-                return res.send({"token":newUser.get('accessToken')});
-            });
         });
     }
 

@@ -10,8 +10,9 @@ function tasks(app) {
             if (error) {
                 console.log("Error by finding all tasks");
                 res.send({"Status":"Error"});
+            } else {
+                res.send(data);
             }
-            res.send(data);
         });
     });
 
@@ -23,8 +24,9 @@ function tasks(app) {
             if(error) {
                 console.log("Error finding by id :" + id);
                 res.send({"Status":"Error"});
+            } else {
+                res.send(data);
             }
-            res.send(data);
         });
     });
 
@@ -38,9 +40,10 @@ function tasks(app) {
             if (err) {
                 console.log("Error by save task");
                 res.send({"Status":"Error"});
+            } else {
+                console.log("Task was saved");
+                res.send({"_id":save_task._id});
             }
-            console.log("Task was saved");
-            res.send({"_id":save_task._id});
         });
     });
 
@@ -55,11 +58,11 @@ function tasks(app) {
             if (error) {
                 console.log("Error update task");
                 res.send({"Status":"Error"});
-            }
-            if(affected === 0) {
+            } else if(affected === 0) {
                 res.send({"Status":"Error"});
+            } else {
+                res.send({"Status":"Success"});
             }
-            res.send({"Status":"Success"});
         });
     });
 
@@ -71,9 +74,10 @@ function tasks(app) {
             if (error) {
                 res.send("Fail delete task");
                 res.send({"Status":"Error"});
+            } else {
+                console.log("Task was deleted");
+                res.send({"Status":"Success"});
             }
-            console.log("Task was deleted");
-            res.send({"Status":"Success"});
         });
     });
 
@@ -84,8 +88,9 @@ function tasks(app) {
             if (error) {
                 console.log("Error by counting tasks");
                 res.send({"Status":"Error"});
+            } else {
+                res.send({count:count});
             }
-            res.send({count:count});
         });
     });
 }
