@@ -44,8 +44,11 @@ function(app, User, Note, List) {
       this.session.done(function() {
         if (self.user.get("token") != "")
           self.navigate("/main", {trigger: true});
-        else
+        else {
+          self.notes.reset();
+          self.list.reset();
           self.navigate("/", {trigger: true});
+        }
       });
     },
 
