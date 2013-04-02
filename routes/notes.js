@@ -10,8 +10,9 @@ function notes(app) {
             if (error) {
                 console.log("Error by finding notes");
                 res.send({"Status":"Error"});
+            } else {
+                res.send(data);
             }
-            res.send(data);
         });
     });
 
@@ -25,9 +26,10 @@ function notes(app) {
             if (err) {
                 console.log("Error by saving note");
                 res.send({"Status":"Error"});
+            } else {
+                console.log("Note was saved");
+                res.send({"_id":save_note._id});
             }
-            console.log("Note was saved");
-            res.send({"_id":save_note._id});
         });
     });
 
@@ -39,8 +41,9 @@ function notes(app) {
             if(error) {
                 console.log("Error finding note by id :" + id);
                 res.send({"Status":"Error"});
+            } else {
+                res.send(data);
             }
-            res.send(data);
         });
     });
 
@@ -54,11 +57,11 @@ function notes(app) {
             if (error) {
                 console.log("Error update note");
                 res.send({"Status":"Error"});
-            }
-            if(affected === 0) {
+            } else if(affected === 0) {
                 res.send({"Status":"Error"});
+            } else {
+                res.send({"Status":"Success"});
             }
-            res.send({"Status":"Success"});
         });
     });
 
@@ -70,9 +73,10 @@ function notes(app) {
             if (error) {
                 console.log("Fail delete note");
                 res.send({"Status":"Error"});
+            } else {
+                console.log("Note was deleted");
+                res.send({"Status":"Success"});
             }
-            console.log("Note was deleted");
-            res.send({"Status":"Success"});
         });
     });
 
@@ -83,8 +87,9 @@ function notes(app) {
             if (error) {
                 console.log("Error by counting notes");
                 res.send({"Status":"Error"});
+            } else {
+                res.send({count:count});
             }
-            res.send({count:count});
         });
     });
 }

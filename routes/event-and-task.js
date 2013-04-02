@@ -37,8 +37,8 @@ function list(app) {
                     data[i]._doc.type = "Task";
                     result.push(data[i]);
                 }
+                res.send(result);
             }
-            res.send(result);
         });
     }
 
