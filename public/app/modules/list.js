@@ -3,6 +3,7 @@ define([
     // Application.
     "app",
     "moment",
+    "bootstrap-datepicker"
 
 ],
 
@@ -33,7 +34,6 @@ define([
             },
             initialize: function (item, ops) {
                 //if model haven't id, then save it to server
-                app.log(item);
                 if (this.isNew() && !ops.wait)
                     this.save(item, {wait: true});
             },
@@ -109,14 +109,12 @@ define([
                 e.preventDefault();
                 this._order_by = "startDate";
                 this.collection.order_by_date();
-                // this.render();
             },
 
             prioritySort: function (e) {
                 e.preventDefault();
                 this._order_by = "priority";
                 this.collection.order_by_priority();
-                // this.render();
             },
 
             //rendering item notes subview
@@ -231,6 +229,12 @@ define([
 
             serialize: function () {
                 return {model: this.model};
+            },
+
+            afterRender: function() {
+                this.$el.find("#startDate").datepicker({
+                    format: "dd-mm-yyyy"
+                });
             }
         });
 

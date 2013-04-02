@@ -25,6 +25,12 @@
 
 	</div>
     <div class="control-group">
+        <label for="startDate" class="control-label">Date:</label>
+        <div class="controls">
+            <input type="text" name="startDate" id="startDate" value="<%= model.get("startDate") %>">
+        </div>
+    </div>
+    <div class="control-group">
         <label for="state" class="control-label">State:</label>
         <div class="controls">
             <input type="checkbox" name="state" id="state" <% if (model.get("state")){ %>checked<% } %>>
