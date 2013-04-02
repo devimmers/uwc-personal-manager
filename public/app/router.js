@@ -75,14 +75,14 @@ function(app, User, Note, List) {
       this.session.done(function() {
         // app.log(self.user.get("token"));
         if (self.user.get("token") != ""){
-          self.main.insertViews(
-            [new List.Views.Layout({
+          self.main.insertViews({
+            "#main-block":[new List.Views.Layout({
                 collection: self.list
               }),
             new Note.Views.Layout({
                 collection: self.notes
               })
-            ]
+            ]}
           ).render();
           self.notes.fetch();
           self.list.fetch();

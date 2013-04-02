@@ -84,7 +84,7 @@ define([
         List.Views.Layout = Backbone.Layout.extend({
             template: "list/layout",
             tagName: "div",
-            className: "main-block",
+            className: "span9",
 
             events: {
                 "click #add-item": "add",
@@ -234,7 +234,7 @@ define([
 
             afterRender: function() {
                 this.$el.find("#startDate").datepicker({
-                    format: "dd-mm-yyyy"
+                    format: "dd/mm/yyyy"
                 });
             }
         });

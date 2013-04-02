@@ -39,7 +39,7 @@ function(app) {
   Note.Views.Layout = Backbone.Layout.extend({
     template: "note/layout",
     tagName: "div",
-    className: "aside",
+    className: "span3",
 
     events: {
       "click #send-note": "addNote"

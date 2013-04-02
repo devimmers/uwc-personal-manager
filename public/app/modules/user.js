@@ -28,6 +28,7 @@ function(app) {
   // Default View.
   User.Views.Login = Backbone.Layout.extend({
     template: "user/login",
+    className: "container-fluid",
 
     events: {
       "click #login": "login",
