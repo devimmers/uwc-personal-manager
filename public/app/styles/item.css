@@ -10,11 +10,10 @@
     height: 80px;
     border: 3px solid #0040D0;
     text-align: center;
-    background: #777777;
 }
 
-.list-item.active {
-    background: #33FF33;
+.list-item.inactive {
+    background: #777777;
 }
 
 .title {

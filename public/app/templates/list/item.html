@@ -1,4 +1,4 @@
-<div class="list-item <% if (model.state){ %>active<%} %>">
+<div class="list-item <% if (!model.state){ %>inactive<%} %>">
     <div class="label">
         <%= model.type %>
     </div>
