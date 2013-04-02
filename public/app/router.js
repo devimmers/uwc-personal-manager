@@ -87,8 +87,8 @@ function(app, User, Note, List) {
               })
             ]}
           ).render();
-          self.notes.fetch();
           self.list.fetch();
+          self.notes.fetch();
         }
       });
     }
