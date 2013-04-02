@@ -9,7 +9,7 @@
         <strong><%= model.title %></strong>
     </div>
     <div class="start-date">
-        <%= model.startDate %>
+        <%= moment(model.startDate).format('MM/DD/YYYY')  %>
     </div>
     <div class="buttons">
         <button class="btn btn-primary js-edit">Edit</button>
