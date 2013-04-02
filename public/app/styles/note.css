@@ -9,7 +9,7 @@
   vertical-align: top;
 }
 .note-item {
-  border: 3px solid #222;
+  border: 1px solid #222;
   padding: 20px;
   position: relative;
 }
@@ -23,13 +23,29 @@
   height: 150px;
 }
 .note-item .ct-item.edit {
-  border: 1px solid #f00;
+    background-color: #ffffff;
+    border-radius: 4px;
 }
 .note-item .new {
-  border: 1px solid #f00;
+  background-color: #ffffff;
+  border-radius: 4px;
 }
+.note-item .new.ct-item {
+    height: 120px;
+}
+
+.ct-item {
+    max-height: 150px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 .button {
   display: inline-block;
   border: none;
   background: none;
+}
+
+.btn.js-save {
+    margin-top: 5px;
 }

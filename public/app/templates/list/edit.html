@@ -14,7 +14,7 @@
 	<div class="control-group">
 		<label for="priority" class="control-label">Priority:</label>
 		<div class="controls">
-            <select name="priority" id="priority" value="<%= model.get("priority") %>">
+            <select class="selectpicker" name="priority" id="priority" value="<%= model.get("priority") %>">
                 <option value="5">Major</option>
                 <option value="4">Important</option>
                 <option value="3">Middle</option>
@@ -22,6 +22,7 @@
                 <option value="1">Trivial</option>
             </select>
         </div>
+
 	</div>
     <div class="control-group">
         <label for="state" class="control-label">State:</label>

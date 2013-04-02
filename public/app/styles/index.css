@@ -5,7 +5,7 @@
 
 /*-- Application stylesheets. -----------------------------------------------*/
 
-@import "metro-boot.css";
+@import "bootstrap.css";
 @import "main.css";
 @import "note.css";
 @import "item.css";

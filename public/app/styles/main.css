@@ -29,5 +29,9 @@ body:after {
   *margin: 0 1.0416666666666665% -correction;
 }
 
+.note-item {
+    background-color: #DDDDDD;
+    border-radius: 4px;
+}
 .sorting-area button {
 }

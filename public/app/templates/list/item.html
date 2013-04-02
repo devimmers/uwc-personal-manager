@@ -1,8 +1,8 @@
 <div class="list-item <% if (model.state){ %>active<%} %>">
-    <div class="type">
+    <div class="label">
         <%= model.type %>
     </div>
-    <div class="priority">
+    <div class="badge badge-info">
         <%= priorityDoc[model.priority] %>
     </div>
     <div class="title">
@@ -15,8 +15,8 @@
  -->
 
     <div class="buttons">
-        <button class="btn js-delete">Del</button>
-        <button class="btn js-edit">Edit</button>
+        <button class="btn btn-primary js-edit">Edit</button>
+        <button class="btn btn-danger js-delete">Del</button>
     </div>
 
     <div class="description">
