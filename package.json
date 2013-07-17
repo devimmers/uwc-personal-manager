@@ -12,7 +12,6 @@
         "passport-local": "*",
         "passport-local-mongoose": "*",
         "passport-facebook":"*",
-        "ejs": "*",
-        "bcrypt": "*"
+        "ejs": "*"
     }
 }

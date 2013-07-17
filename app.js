@@ -34,10 +34,12 @@ app.configure(function () {
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(passport.initialize());
     app.use(passport.session());
-    app.engine('html', require('ejs').__express);
-    app.set('views', __dirname + '/public');
+    app.set('views', __dirname + '/views');
+    app.set('view engine', 'jade');
+    app.set('view options', {
+        layout: false
+    });
     app.use(app.router);
-    app.use(express.static(path.join(__dirname, 'public')));
 });
 
 app.configure('development', function () {
@@ -68,10 +70,6 @@ tasks(app);
 events(app);
 //List routes settings
 list(app);
-
-app.get('/*', function (req, res) {
-    res.render('index.html');
-});
 
 //Start app
 app.listen(app.get('port'), function () {
